@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Farhod & Shirin — Nikoh To'yi Taklifnomasi</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================
+           2. CSS VARIABLES & DESIGN SYSTEM
+           ========================================== */
+        :root {
+            --bg-deep: #1A0c12;
+            --bg-main: #24121B;
+            --bg-card: #2F1823;
+            --bg-card-hover: #3D202E;
+            
+            --burgundy-dark: #3A0B1B;
+            --burgundy: #5C132C;
+            --ruby: #7A1E3E;
+            
+            --warm-ivory: #FDFBF7;
+            --soft-blush: #E8D4D6;
+            --champagne-gold: #D4AF37;
+            --champagne-light: #F3E5AB;
+            --dark-plum: #1E0D16;
+            
+            --text-main: #FDFBF7;
+            --text-muted: #D1B8BE;
+            --text-gold: #E5C568;
+            
+            --serif: 'Cormorant Garamond', 'Playfair Display', serif;
+            --script: 'Great Vibes', cursive;
+            --sans: 'Manrope', sans-serif;
+            
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-lux: 0 20px 40px rgba(0, 0, 0, 0.4);
+            --border-gold: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        /* ==========================================
+           3. GLOBAL STYLES
+           ========================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        ::selection {
+            background: var(--ruby);
+            color: var(--warm-ivory);
+        }
+
+        /* Subtle Cultural Background Texture & Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(92, 19, 44, 0.25) 0%, transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D4AF37' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Utility classes */
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        section {
+            padding: 80px 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--serif);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+
+        .gold-text {
+            color: var(--champagne-gold);
+            font-family: var(--script);
+            font-size: 1.4em;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--champagne-gold), transparent);
+            margin: 30px auto;
+            opacity: 0.6;
+        }
+
+        /* Floating Petals / Particles Container */
+        #particles-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background: radial-gradient(circle, rgba(232,212,214,0.6) 0%, rgba(212,175,55,0.2) 100%);
+            border-radius: 150% 0 150% 0;
+            animation: fall linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(110vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ==========================================
+           TOP BAR & LANGUAGE SWITCHER / MUSIC
+           ========================================== */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(26,12,18,0.8), transparent);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: var(--transition-smooth);
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            border: var(--border-gold);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: var(--sans);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .lang-btn.active {
+            color: var(--champagne-gold);
+        }
+
+        .music-toggle {
+            background: rgba(255,255,255,0.05);
+            border: var(--border-gold);
+            color: var(--champagne-gold);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition-smooth);
+        }
+
+        .music-toggle.playing {
+            animation: pulse-music 2s infinite ease-in-out;
+            background: rgba(212,175,55,0.15);
+        }
+
+        @keyframes pulse-music {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212,175,55,0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 15px rgba(212,175,55,0.6); }
+        }
+
+        /* ==========================================
+           OPENING OVERLAY (CINEMATIC ENTRANCE)
+           ========================================== */
+        #opening-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #3A0B1B 0%, #1A0C12 100%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #opening-screen.hidden {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        .opening-ornament {
+            color: var(--champagne-gold);
+            font-size: 24px;
+            margin-bottom: 20px;
+            animation: float-slow 3s infinite ease-in-out;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .opening-subtitle {
+            font-family: var(--sans);
+            font-size: 13px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .opening-names {
+            font-family: var(--serif);
+            font-size: clamp(2.5rem, 8vw, 3.8rem);
+            line-height: 1.1;
+            color: var(--warm-ivory);
+            margin-bottom: 15px;
+        }
+
+        .opening-names span {
+            font-family: var(--script);
+            color: var(--champagne-gold);
+            font-size: 0.8em;
+            display: block;
+            margin: 5px 0;
+        }
+
+        .opening-text {
+            font-family: var(--serif);
+            font-style: italic;
+            color: var(--soft-blush);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 320px;
+        }
+
+        .open-btn {
+            background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+            color: var(--dark-plum);
+            border: none;
+            padding: 16px 48px;
+            font-family: var(--sans);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(212,175,55,0.3);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .open-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(212,175,55,0.5);
+        }
+
+        /* Main Wrapper (Hidden until opened) */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1.2s ease 0.3s;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        /* ==========================================
+           HERO SECTION
+           ========================================== */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 60px;
+            position: relative;
+        }
+
+        .hero-badge {
+            font-size: 12px;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--champagne-gold);
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .hero-card-frame {
+            width: 100%;
+            max-width: 380px;
+            border: var(--border-gold);
+            padding: 45px 25px;
+            background: linear-gradient(180deg, rgba(47, 24, 35, 0.6) 0%, rgba(26, 12, 18, 0.8) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-lux);
+            position: relative;
+            border-radius: 4px;
+        }
+
+        .hero-card-frame::before {
+            content: '';
+            position: absolute;
+            top: 6px; left: 6px; right: 6px; bottom: 6px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            pointer-events: none;
+        }
+
+        .hero-names {
+            font-family: var(--serif);
+            font-size: clamp(3rem, 10vw, 4.2rem);
+            line-height: 1.05;
+            color: var(--warm-ivory);
+            margin-bottom: 15px;
+        }
+
+        .hero-ampersand {
+            font-family: var(--script);
+            color: var(--champagne-gold);
+            font-size: 0.7em;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .hero-date-box {
+            margin-top: 30px;
+            border-top: var(--border-gold);
+            border-bottom: var(--border-gold);
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-family: var(--sans);
+            font-size: 13px;
+            letter-spacing: 0.2em;
+            color: var(--soft-blush);
+        }
+
+        /* ==========================================
+           INVITATION INVITATION SPEECH SECTION
+           ========================================== */
+        .speech-section {
+            text-align: center;
+            padding: 90px 24px;
+        }
+
+        .speech-greeting {
+            font-family: var(--serif);
+            font-size: 2.2rem;
+            color: var(--champagne-gold);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .speech-body {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--warm-ivory);
+            max-width: 360px;
+            margin: 0 auto;
+        }
+
+        .speech-body p {
+            margin-bottom: 20px;
+        }
+
+        /* ==========================================
+           COUNTDOWN SECTION
+           ========================================== */
+        .countdown-section {
+            text-align: center;
+            background: linear-gradient(180deg, transparent, rgba(58, 11, 27, 0.4), transparent);
+        }
+
+        .countdown-title {
+            font-size: 14px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 360px;
+            margin: 0 auto;
+        }
+
+        .countdown-item {
+            background: var(--bg-card);
+            border: var(--border-gold);
+            padding: 16px 8px;
+            border-radius: 6px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .countdown-number {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            color: var(--champagne-gold);
+            font-weight: 600;
+            display: block;
+            line-height: 1.1;
+        }
+
+        .countdown-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-top: 6px;
+            display: block;
+        }
+
+        /* ==========================================
+           OUR DAY / TIMELINE SECTION
+           ========================================== */
+        .timeline-section {
+            padding: 90px 24px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--champagne-gold);
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--warm-ivory);
+        }
+
+        .timeline-wrapper {
+            position: relative;
+            max-width: 340px;
+            margin: 0 auto;
+        }
+
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            left: 50%;
+            width: 1px;
+            background: rgba(212, 175, 55, 0.25);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            text-align: left;
+        }
+
+        .timeline-content {
+            width: 42%;
+            background: var(--bg-card);
+            border: var(--border-gold);
+            padding: 16px;
+            border-radius: 6px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .timeline-time {
+            font-family: var(--serif);
+            font-size: 1.3rem;
+            color: var(--champagne-gold);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: var(--champagne-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--champagne-gold);
+            z-index: 2;
+        }
+
+        /* ==========================================
+           VENUE SECTION
+           ========================================== */
+        .venue-section {
+            text-align: center;
+            padding: 80px 24px;
+            background: linear-gradient(180deg, rgba(36,18,27,0.5), rgba(58,11,27,0.3));
+        }
+
+        .venue-card {
+            background: var(--bg-card);
+            border: var(--border-gold);
+            padding: 40px 24px;
+            border-radius: 8px;
+            max-width: 380px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lux);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .venue-icon {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .venue-name {
+            font-family: var(--serif);
+            font-size: 1.8rem;
+            color: var(--warm-ivory);
+            margin-bottom: 10px;
+        }
+
+        .venue-address {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .map-btn {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid var(--champagne-gold);
+            color: var(--champagne-gold);
+            padding: 12px 30px;
+            font-family: var(--sans);
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: var(--transition-smooth);
+        }
+
+        .map-btn:hover {
+            background: var(--champagne-gold);
+            color: var(--dark-plum);
+            box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+        }
+
+        /* ==========================================
+           PHOTO GALLERY SECTION
+           ========================================== */
+        .gallery-section {
+            padding: 90px 24px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            border: var(--border-gold);
+            aspect-ratio: 4/5;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            background: var(--bg-card);
+        }
+
+        .gallery-item.wide {
+            grid-column: span 2;
+            aspect-ratio: 16/9;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 6, 10, 0.95);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #lightbox img {
+            max-width: 90%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 4px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            border: var(--border-gold);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: none;
+            border: none;
+            color: var(--warm-ivory);
+            font-size: 32px;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ==========================================
+           RSVP SECTION
+           ========================================== */
+        .rsvp-section {
+            padding: 90px 24px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(58,11,27,0.3), rgba(36,18,27,0.6));
+        }
+
+        .rsvp-card {
+            background: var(--bg-card);
+            border: var(--border-gold);
+            padding: 40px 24px;
+            border-radius: 8px;
+            max-width: 380px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lux);
+        }
+
+        .rsvp-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .rsvp-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .rsvp-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--warm-ivory);
+            padding: 14px 20px;
+            border-radius: 6px;
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rsvp-btn:hover, .rsvp-btn.selected {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--champagne-gold);
+            color: var(--champagne-gold);
+        }
+
+        .rsvp-input {
+            width: 100%;
+            background: rgba(0,0,0,0.2);
+            border: var(--border-gold);
+            padding: 14px 16px;
+            border-radius: 6px;
+            color: var(--warm-ivory);
+            font-family: var(--sans);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .rsvp-input:focus {
+            border-color: var(--champagne-gold);
+        }
+
+        .rsvp-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+            color: var(--dark-plum);
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .rsvp-submit:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .rsvp-success {
+            display: none;
+            color: var(--champagne-gold);
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            padding: 20px 0;
+            font-style: italic;
+        }
+
+        /* ==========================================
+           GUEST WISHES / MESSAGE WALL
+           ========================================== */
+        .wishes-section {
+            padding: 90px 24px;
+        }
+
+        .wishes-card {
+            background: var(--bg-card);
+            border: var(--border-gold);
+            padding: 35px 24px;
+            border-radius: 8px;
+            max-width: 380px;
+            margin: 0 auto;
+            box-shadow: var(--shadow-lux);
+        }
+
+        .wishes-wall {
+            max-height: 280px;
+            overflow-y: auto;
+            margin-top: 25px;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .wish-bubble {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.15);
+            padding: 12px 16px;
+            border-radius: 6px;
+            text-align: left;
+        }
+
+        .wish-author {
+            font-weight: 600;
+            color: var(--champagne-gold);
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .wish-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .wish-time {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* ==========================================
+           SHARING & CLOSING
+           ========================================== */
+        .closing-section {
+            padding: 100px 24px 60px;
+            text-align: center;
+            background: radial-gradient(circle at center, #3A0B1B 0%, #1A0C12 100%);
+        }
+
+        .closing-quote {
+            font-family: var(--serif);
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--warm-ivory);
+            max-width: 340px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .share-box {
+            max-width: 380px;
+            margin: 40px auto 0;
+            background: var(--bg-card);
+            border: var(--border-gold);
+            padding: 30px 20px;
+            border-radius: 8px;
+        }
+
+        .share-title {
+            font-size: 12px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .share-btn {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: var(--border-gold);
+            color: var(--warm-ivory);
+            padding: 10px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .share-btn:hover {
+            background: var(--champagne-gold);
+            color: var(--dark-plum);
+        }
+
+        .footer-credits {
+            margin-top: 60px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.1em;
+        }
+
+        /* ==========================================
+           MEDIA QUERIES FOR LARGER SCREENS
+           ========================================== */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 520px;
+            }
+            .gallery-grid {
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Particles / Petals Background -->
+    <div id="particles-container"></div>
+
+    <!-- Top Navigation Bar -->
+    <div class="top-bar">
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="setLanguage('uz')">UZ</button>
+            <span style="color: rgba(255,255,255,0.2)">|</span>
+            <button class="lang-btn" onclick="setLanguage('ru')">RU</button>
+        </div>
+        <button class="music-toggle" id="musicToggleBtn" onclick="toggleMusic()" title="Musiqani yoqish/o'chirish">♫</button>
+    </div>
+
+    <!-- Audio Element (Placeholder royalty-free ambient audio or copyright-free chime) -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-wedding-piano-112196.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ==========================================
+       1. OPENING SCREEN (CINEMATIC ENTRANCE)
+       ========================================== -->
+    <div id="opening-screen">
+        <div class="opening-ornament">✦ ❦ ✦</div>
+        <div class="opening-subtitle" data-i18n="greetingSub">Maxsus taklifnoma</div>
+        <div class="opening-names">
+            Farhod <br><span>&amp;</span> Shirin
+        </div>
+        <div class="opening-text" data-i18n="openingText">"Bizning hayotimizdagi eng go‘zal kunga lutfan taklif etamiz."</div>
+        <button class="open-btn" onclick="openInvitation()" data-i18n="openBtn">TAKlifnomani ochish</button>
+    </div>
+
+    <!-- ==========================================
+       MAIN CONTENT CONTAINER
+       ========================================== -->
+    <div id="main-content">
+
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <div class="hero-badge" data-i18n="heroBadge">NIKOH TO'YI TAKLIFNOMASI</div>
+            <div class="hero-card-frame">
+                <h1 class="hero-names">
+                    Farhod
+                    <span class="hero-ampersand">&amp;</span>
+                    Shirin
+                </h1>
+                <div class="divider"></div>
+                <div class="hero-date-box">
+                    <span>03</span>
+                    <span>•</span>
+                    <span>11</span>
+                    <span>•</span>
+                    <span>2026</span>
+                </div>
+            </div>
+            <div style="margin-top: 40px; opacity: 0.6; font-size: 13px; letter-spacing: 0.2em;" data-i18n="scrollHint">PASTGA SURING ↓</div>
+        </section>
+
+        <!-- SPEECH / INVITATION TEXT -->
+        <section class="speech-section">
+            <div class="container">
+                <div class="speech-greeting" data-i18n="speechGreeting">Assalomu alaykum!</div>
+                <div class="speech-body">
+                    <p data-i18n="speechP1">Bizning hayotimizdagi eng go‘zal kunlardan birini siz bilan birga nishonlashdan mamnun bo‘lamiz.</p>
+                    <p data-i18n="speechP2">Aziz mehmonimiz, sizni nikoh to‘yimizga chin qalbimizdan taklif qilamiz. Quvonchimizga sherik bo‘ling!</p>
+                </div>
+                <div class="divider"></div>
+            </div>
+        </section>
+
+        <!-- COUNTDOWN SECTION -->
+        <section class="countdown-section">
+            <div class="container">
+                <div class="countdown-title" data-i18n="countdownTitle">TO'YGacha QOLGAN VAQT</div>
+                <div class="countdown-grid">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label" data-i18n="cdDays">Kun</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label" data-i18n="cdHours">Soat</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label" data-i18n="cdMinutes">Daqiqa</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label" data-i18n="cdSeconds">Soniya</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMELINE SECTION -->
+        <section class="timeline-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-subtitle" data-i18n="timelineSub">Dastur</div>
+                    <h2 class="section-title" data-i18n="timelineTitle">To'y Kun tartibi</h2>
+                </div>
+                
+                <div class="timeline-wrapper">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-time">17:30</div>
+                            <div class="timeline-desc" data-i18n="t1Desc">Mehmonlarni kutib olish</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-time">18:00</div>
+                            <div class="timeline-desc" data-i18n="t2Desc">Nikoh marosimi va tabriklar</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-time">19:00</div>
+                            <div class="timeline-desc" data-i18n="t3Desc">To‘y tantanali ziyofati</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-time">21:00</div>
+                            <div class="timeline-desc" data-i18n="t4Desc">Bayram dastur va shou</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-time">22:30</div>
+                            <div class="timeline-desc" data-i18n="t5Desc">Tantanali yakun</div>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VENUE SECTION -->
+        <section class="venue-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-subtitle" data-i18n="venueSub">Manzil</div>
+                    <h2 class="section-title" data-i18n="venueTitle">To'y O'tkaziladigan Joy</h2>
+                </div>
+                <div class="venue-card">
+                    <div class="venue-icon">🏛️</div>
+                    <h3 class="venue-name">Versal Wedding Hall</h3>
+                    <div class="venue-address" data-i18n="venueAddress">Tashkent, Uzbekistan<br>Shayxontohur tumani, Labzak ko‘chasi</div>
+                    <a href="https://maps.google.com/?q=Versal+Wedding+Hall+Tashkent" target="_blank" class="map-btn" data-i18n="mapBtn">Xaritada ochish 📍</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHOTO GALLERY SECTION -->
+        <section class="gallery-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-subtitle" data-i18n="gallerySub">Xotiralar</div>
+                    <h2 class="section-title" data-i18n="galleryTitle">Bizning Lahzalar</h2>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item wide" onclick="openLightbox('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80')">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" alt="Couple portrait">
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80')">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=600&q=80" alt="Wedding moment">
+                    </div>
+                    <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80')">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80" alt="Celebration">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP SECTION -->
+        <section class="rsvp-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-subtitle" data-i18n="rsvpSub">Ishtirok etish</div>
+                    <h2 class="section-title" data-i18n="rsvpTitle">Sizni kutamiz</h2>
+                </div>
+                <div class="rsvp-card">
+                    <p class="rsvp-desc" data-i18n="rsvpDesc">To‘yimizda ishtirok etishingizni tasdiqlab qo‘ysangiz, juda xursand bo‘lamiz.</p>
+                    
+                    <form id="rsvpForm" onsubmit="handleRsvp(event)">
+                        <input type="text" id="guestName" class="rsvp-input" placeholder="Ism va familiyangiz" required data-i18n-placeholder="rsvpNamePlaceholder">
+                        
+                        <div class="rsvp-options">
+                            <button type="button" class="rsvp-btn" onclick="selectRsvp(this, 'Albatta kelaman')">
+                                <span data-i18n="rsvpOpt1">✓ Albatta kelaman</span>
+                                <span style="font-size: 18px;">✨</span>
+                            </button>
+                            <button type="button" class="rsvp-btn" onclick="selectRsvp(this, 'Hali aniq emas')">
+                                <span data-i18n="rsvpOpt2">? Hali aniq emas</span>
+                                <span style="font-size: 18px;">⏳</span>
+                            </button>
+                            <button type="button" class="rsvp-btn" onclick="selectRsvp(this, 'Afsuski, kela olmayman')">
+                                <span data-i18n="rsvpOpt3">✕ Afsuski, kela olmayman</span>
+                                <span style="font-size: 18px;">🕊️</span>
+                            </button>
+                        </div>
+                        
+                        <button type="submit" class="rsvp-submit" data-i18n="rsvpSubmit">Tasdiqlash</button>
+                    </form>
+                    
+                    <div id="rsvpSuccess" class="rsvp-success" data-i18n="rsvpSuccessMsg">
+                        Javobingiz uchun rahmat! Sizni to‘yimizda ko‘rishdan mamnun bo‘lamiz. ❤️
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GUEST WISHES / MESSAGE WALL -->
+        <section class="wishes-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-subtitle" data-i18n="wishesSub">Dildagi gaplar</div>
+                    <h2 class="section-title" data-i18n="wishesTitle">Bizga tilak qoldiring</h2>
+                </div>
+                <div class="wishes-card">
+                    <form id="wishForm" onsubmit="handleWish(event)">
+                        <input type="text" id="wishName" class="rsvp-input" placeholder="Ismingiz" required data-i18n-placeholder="wishNamePlaceholder" style="margin-bottom: 10px;">
+                        <textarea id="wishText" class="rsvp-input" placeholder="Samimiy tilaklaringiz..." rows="3" required data-i18n-placeholder="wishTextPlaceholder" style="resize: none; margin-bottom: 15px;"></textarea>
+                        <button type="submit" class="rsvp-submit" data-i18n="wishSubmit">Tilak qoldirish</button>
+                    </form>
+                    
+                    <div class="wishes-wall" id="wishesWall">
+                        <!-- Dynamically populated from localStorage -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLOSING & SHARING -->
+        <section class="closing-section">
+            <div class="container">
+                <div class="closing-quote" data-i18n="closingQuote">
+                    "Bizning baxtimizni baham ko‘rishga kelishingizni intiqlik bilan kutamiz."
+                </div>
+                
+                <h2 style="font-family: var(--serif); font-size: 2.2rem; color: var(--warm-ivory); margin-bottom: 10px;">
+                    Farhod <span style="font-family: var(--script); color: var(--champagne-gold);">&amp;</span> Shirin
+                </h2>
+                <div style="font-size: 13px; letter-spacing: 0.3em; color: var(--champagne-gold);">03 • 11 • 2026</div>
+
+                <div class="share-box">
+                    <div class="share-title" data-i18n="shareTitle">Taklifnomani ulashing</div>
+                    <div class="share-buttons">
+                        <button class="share-btn" onclick="shareToTelegram()">Telegram</button>
+                        <button class="share-btn" onclick="shareToWhatsApp()">WhatsApp</button>
+                        <button class="share-btn" onclick="copyLink()" data-i18n="copyBtn">Nusxa olish</button>
+                    </div>
+                </div>
+
+                <div class="footer-credits">
+                    © 2026 Farhod &amp; Shirin Wedding. All rights reserved.
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Lightbox Element -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close">&times;</button>
+        <img id="lightboxImg" src="" alt="Zoomed view">
+    </div>
+
+    <!-- ==========================================
+       JAVASCRIPT CODE
+       ========================================== -->
+    <script>
+        /* ------------------------------------------
+           CONFIGURATION OBJECT
+           ------------------------------------------ */
+        const INVITATION = {
+            bride: "Shirin",
+            groom: "Farhod",
+            date: "03 November 2026",
+            time: "18:00",
+            venue: "Versal Wedding Hall",
+            city: "Tashkent, Uzbekistan",
+            mapUrl: "https://maps.google.com/?q=Versal+Wedding+Hall+Tashkent",
+            musicUrl: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf756.mp3?filename=romantic-wedding-piano-112196.mp3"
+        };
+
+        /* ------------------------------------------
+           TRANSLATIONS (UZ / RU)
+           ------------------------------------------ */
+        const translations = {
+            uz: {
+                greetingSub: "Maxsus taklifnoma",
+                openingText: "\"Bizning hayotimizdagi eng go‘zal kunga lutfan taklif etamiz.\"",
+                openBtn: "Taklifnomani ochish",
+                heroBadge: "NIKOH TO'YI TAKLIFNOMASI",
+                speechGreeting: "Assalomu alaykum!",
+                speechP1: "Bizning hayotimizdagi eng go‘zal kunlardan birini siz bilan birga nishonlashdan mamnun bo‘lamiz.",
+                speechP2: "Aziz mehmonimiz, sizni nikoh to‘yimizga chin qalbimizdan taklif qilamiz. Quvonchimizga sherik bo‘ling!",
+                countdownTitle: "TO'Ygacha QOLGAN VAQT",
+                cdDays: "Kun",
+                cdHours: "Soat",
+                cdMinutes: "Daqiqa",
+                cdSeconds: "Soniya",
+                timelineSub: "Dastur",
+                timelineTitle: "To'y Kun tartibi",
+                t1Desc: "Mehmonlarni kutib olish",
+                t2Desc: "Nikoh marosimi va tabriklar",
+                t3Desc: "To‘y tantanali ziyofati",
+                t4Desc: "Bayram dastur va shou",
+                t5Desc: "Tantanali yakun",
+                venueSub: "Manzil",
+                venueTitle: "To'y O'tkaziladigan Joy",
+                venueAddress: "Tashkent, Uzbekistan<br>Shayxontohur tumani, Labzak ko‘chasi",
+                mapBtn: "Xaritada ochish 📍",
+                gallerySub: "Xotiralar",
+                galleryTitle: "Bizning Lahzalar",
+                rsvpSub: "Ishtirok etish",
+                rsvpTitle: "Sizni kutamiz",
+                rsvpDesc: "To‘yimizda ishtirok etishingizni tasdiqlab qo‘ysangiz, juda xursand bo‘lamiz.",
+                rsvpNamePlaceholder: "Ism va familiyangiz",
+                rsvpOpt1: "✓ Albatta kelaman",
+                rsvpOpt2: "? Hali aniq emas",
+                rsvpOpt3: "✕ Afsuski, kela olmayman",
+                rsvpSubmit: "Tasdiqlash",
+                rsvpSuccessMsg: "Javobingiz uchun rahmat! Sizni to‘yimizda ko‘rishdan mamnun bo‘lamiz. ❤️",
+                wishesSub: "Dildagi gaplar",
+                wishesTitle: "Bizga tilak qoldiring",
+                wishNamePlaceholder: "Ismingiz",
+                wishTextPlaceholder: "Samimiy tilaklaringiz...",
+                wishSubmit: "Tilak qoldirish",
+                closingQuote: "\"Bizning baxtimizni baham ko‘rishga kelishingizni intiqlik bilan kutamiz.\"",
+                shareTitle: "Taklifnomani ulashing",
+                copyBtn: "Nusxa olish"
+            },
+            ru: {
+                greetingSub: "Специальное приглашение",
+                openingText: "\"Приглашаем вас разделить с нами самый прекрасный день нашей жизни.\"",
+                openBtn: "Открыть приглашение",
+                heroBadge: "ПРИГЛАШЕНИЕ НА СВАДЬБУ",
+                speechGreeting: "Здравствуйте!",
+                speechP1: "Мы будем счастливы разделить один из самых прекрасных дней нашей жизни вместе с вами.",
+                speechP2: "Дорогие гости, от всего сердца приглашаем вас на наше свадебное торжество.",
+                countdownTitle: "ДО СВАДЬБЫ ОСТАЛОСЬ",
+                cdDays: "Дней",
+                cdHours: "Часов",
+                cdMinutes: "Минут",
+                cdSeconds: "Секунд",
+                timelineSub: "Программа",
+                timelineTitle: "Расписание дня",
+                t1Desc: "Встреча гостей",
+                t2Desc: "Церемония бракосочетания",
+                t3Desc: "Праздничный банкет",
+                t4Desc: "Шоу-программа",
+                t5Desc: "Торжественное завершение",
+                venueSub: "Локация",
+                venueTitle: "Место проведения",
+                venueAddress: "Ташкент, Узбекистан<br>Шайхантахурский район, ул. Лабзак",
+                mapBtn: "Открыть на карте 📍",
+                gallerySub: "Воспоминания",
+                galleryTitle: "Наша галерея",
+                rsvpSub: "Присутствие",
+                rsvpTitle: "Ждем вас",
+                rsvpDesc: "Пожалуйста, подтвердите ваше участие в нашем торжестве.",
+                rsvpNamePlaceholder: "Ваше имя и фамилия",
+                rsvpOpt1: "✓ Обязательно приду",
+                rsvpOpt2: "? Еще не точен",
+                rsvpOpt3: "✕ К сожалению, не смогу",
+                rsvpSubmit: "Подтвердить",
+                rsvpSuccessMsg: "Спасибо за ответ! Будем рады видеть вас на нашей свадьбе. ❤️",
+                wishesSub: "Пожелания",
+                wishesTitle: "Оставьте пожелание",
+                wishNamePlaceholder: "Ваше имя",
+                wishTextPlaceholder: "Ваши искренние пожелания...",
+                wishSubmit: "Отправить пожелание",
+                closingQuote: "\"Мы с нетерпением ждем возможности разделить наше счастье с вами.\"",
+                shareTitle: "Поделиться приглашением",
+                copyBtn: "Скопировать"
+            }
+        };
+
+        let currentLang = 'uz';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+        }
+
+        /* ------------------------------------------
+           PARTICLE / PETAL GENERATOR
+           ------------------------------------------ */
+        function createPetals() {
+            const container = document.getElementById('particles-container');
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) return;
+
+            const count = 15;
+            for (let i = 0; i < count; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                const size = Math.random() * 8 + 6;
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size * 1.4}px`;
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.top = `-20px`;
+                petal.style.animationDuration = `${Math.random() * 8 + 7}s`;
+                petal.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(petal);
+            }
+        }
+
+        /* ------------------------------------------
+           AUDIO & OPENING INTERACTION
+           ------------------------------------------ */
+        let isPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const musicToggleBtn = document.getElementById('musicToggleBtn');
+
+        function openInvitation() {
+            const openingScreen = document.getElementById('opening-screen');
+            const mainContent = document.getElementById('main-content');
+
+            openingScreen.classList.add('hidden');
+            mainContent.classList.add('visible');
+
+            // Attempt to play background music upon user interaction
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicToggleBtn.classList.add('playing');
+                musicToggleBtn.innerHTML = "♫";
+            }).catch(() => {
+                isPlaying = false;
+            });
+        }
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                isPlaying = false;
+                musicToggleBtn.classList.remove('playing');
+                musicToggleBtn.innerHTML = "🔇";
+            } else {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    musicToggleBtn.classList.add('playing');
+                    musicToggleBtn.innerHTML = "♫";
+                }).catch(e => console.log("Audio play blocked"));
+            }
+        }
+
+        /* ------------------------------------------
+           LIVE COUNTDOWN LOGIC
+           ------------------------------------------ */
+        const weddingDate = new Date("November 3, 2026 18:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        /* ------------------------------------------
+           INTERSECTION OBSERVER FOR TIMELINE
+           ------------------------------------------ */
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        /* ------------------------------------------
+           LIGHTBOX GALLERY
+           ------------------------------------------ */
+        function openLightbox(url) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImg');
+            img.src = url;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        /* ------------------------------------------
+           RSVP INTERACTION
+           ------------------------------------------ */
+        let selectedRsvpStatus = "Albatta kelaman";
+
+        function selectRsvp(btn, status) {
+            document.querySelectorAll('.rsvp-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedRsvpStatus = status;
+        }
+
+        function handleRsvp(e) {
+            e.preventDefault();
+            const name = document.getElementById('guestName').value;
+            if(!name) return;
+
+            // Save state or simulate backend submission
+            const rsvpData = { name, status: selectedRsvpStatus, time: new Date().toISOString() };
+            let rsvps = JSON.parse(localStorage.getItem('wedding_rsvps') || '[]');
+            rsvps.push(rsvpData);
+            localStorage.setItem('wedding_rsvps', JSON.stringify(rsvps));
+
+            document.getElementById('rsvpForm').style.display = 'none';
+            document.getElementById('rsvpSuccess').style.display = 'block';
+        }
+
+        /* ------------------------------------------
+           GUEST WISHES / MESSAGE WALL
+           ------------------------------------------ */
+        function loadWishes() {
+            const wall = document.getElementById('wishesWall');
+            const wishes = JSON.parse(localStorage.getItem('wedding_wishes') || '[]');
+            
+            // Default demo wish if empty
+            if (wishes.length === 0) {
+                wishes.push({
+                    name: "Anvar & Dilnoza",
+                    text: "Baxtli bo'linglar! Oila qurishdek ulug' qadam muborak bo'lsin.",
+                    time: "Bugun"
+                });
+            }
+
+            wall.innerHTML = wishes.map(w => `
+                <div class="wish-bubble">
+                    <div class="wish-author">
+                        <span>${escapeHtml(w.name)}</span>
+                        <span class="wish-time">${w.time || 'Yaqinda'}</span>
+                    </div>
+                    <div class="wish-text">${escapeHtml(w.text)}</div>
+                </div>
+            `).join('');
+        }
+
+        function handleWish(e) {
+            e.preventDefault();
+            const name = document.getElementById('wishName').value;
+            const text = document.getElementById('wishText').value;
+
+            if(!name || !text) return;
+
+            const newWish = { name, text, time: "Hozirgina" };
+            let wishes = JSON.parse(localStorage.getItem('wedding_wishes') || '[]');
+            wishes.unshift(newWish);
+            localStorage.setItem('wedding_wishes', JSON.stringify(wishes));
+
+            document.getElementById('wishName').value = '';
+            document.getElementById('wishText').value = '';
+            loadWishes();
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // Initialize wishes on load
+        loadWishes();
+
+        /* ------------------------------------------
+           SHARING FUNCTIONALITY
+           ------------------------------------------ */
+        const shareUrl = window.location.href;
+        const shareText = "Farhod & Shirin nikoh to'yiga taklif etamiz! 💍 03.11.2026";
+
+        function shareToTelegram() {
+            const url = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+            window.open(url, '_blank');
+        }
+
+        function shareToWhatsApp() {
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`;
+            window.open(url, '_blank');
+        }
+
+        function copyLink() {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    alert(currentLang === 'uz' ? "Taklifnoma havolasi nusxalandi!" : "Ссылка скопирована!");
+                });
+            } else {
+                prompt("Havolani nusxalang:", shareUrl);
+            }
+        }
+
+        // Initialize petals on DOM load
+        document.addEventListener('DOMContentLoaded', createPetals);
+    </script>
+</body>
+</html>
