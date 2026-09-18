@@ -1,107 +1,57 @@
 const templates = [
     {
-        category: "wedding",
-        name: "Wedding Basic 01",
-        link: "wedding/wedding-basic-01.html"
+        category: "Weddings",
+        items: [
+            {
+                name: "Wedding Basic 01",
+                url: "wedding/wedding-basic-01.html"
+            }
+        ]
     },
+
     {
-        category: "birthday",
-        name: "Birthday Basic 01",
-        link: "birthday/birthday-basic-01.html"
+        category: "Birthdays",
+        items: [
+            {
+                name: "Birthday Basic 01",
+                url: "birthday/birthday-basic-01.html"
+            }
+        ]
     }
 ];
 
 
-const translations = {
-    en: {
-        weddings: "Weddings",
-        birthdays: "Birthdays"
-    },
+function renderTemplates() {
+    const app = document.getElementById("app");
 
-    ru: {
-        weddings: "Свадьбы",
-        birthdays: "Дни рождения"
-    },
+    templates.forEach(category => {
+        const section = document.createElement("section");
 
-    uz: {
-        weddings: "To'ylar",
-        birthdays: "Tug'ilgan kunlar"
-    }
-};
+        const title = document.createElement("h2");
+        title.textContent = category.category;
 
+        const links = document.createElement("div");
+        links.className = "links";
 
-let language =
-    localStorage.getItem("einv-language") || "en";
+        category.items.forEach(template => {
+            const link = document.createElement("a");
 
+            link.href = template.url;
+            link.textContent = template.name;
 
-function render() {
+            const arrow = document.createElement("span");
+            arrow.textContent = "↗";
 
-    document.querySelector("#wedding-links").innerHTML =
-        templates
-            .filter(item => item.category === "wedding")
-            .map(item => `
-                <a href="${item.link}">
-                    ${item.name}
-                </a>
-            `)
-            .join("");
-
-
-    document.querySelector("#birthday-links").innerHTML =
-        templates
-            .filter(item => item.category === "birthday")
-            .map(item => `
-                <a href="${item.link}">
-                    ${item.name}
-                </a>
-            `)
-            .join("");
-
-
-    document.querySelector(
-        '[data-i18n="weddings"]'
-    ).textContent =
-        translations[language].weddings;
-
-
-    document.querySelector(
-        '[data-i18n="birthdays"]'
-    ).textContent =
-        translations[language].birthdays;
-
-
-    document.documentElement.lang =
-        language;
-
-
-    document
-        .querySelectorAll("[data-lang]")
-        .forEach(button => {
-            button.classList.toggle(
-                "active",
-                button.dataset.lang === language
-            );
+            link.appendChild(arrow);
+            links.appendChild(link);
         });
+
+        section.appendChild(title);
+        section.appendChild(links);
+
+        app.appendChild(section);
+    });
 }
 
 
-document
-    .querySelectorAll("[data-lang]")
-    .forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            language =
-                button.dataset.lang;
-
-            localStorage.setItem(
-                "einv-language",
-                language
-            );
-
-            render();
-        });
-    });
-
-
-render();
+document.addEventListener("DOMContentLoaded", renderTemplates);

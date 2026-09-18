@@ -1,522 +1,2532 @@
-/* ========================================
-   E·INV
-   Simple Gallery
-======================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    initLanguage();
-    initNavigation();
-
-});
-
-
-/* ========================================
-   LANGUAGE
-======================================== */
-
-const translations = {
-
-    en: {
-        navWeddings: "Weddings",
-        navBirthdays: "Birthdays",
-
-        eyebrow: "Digital Invitation Studio",
-
-        heroTitle:
-            "Invitations made to be remembered.",
-
-        heroDescription:
-            "Elegant digital invitations designed for weddings, birthdays and life's beautiful moments.",
-
-        weddingTitle:
-            "Weddings",
-
-        weddingDescription:
-            "For your most beautiful beginning.",
-
-        birthdayTitle:
-            "Birthdays",
-
-        birthdayDescription:
-            "Celebrate another beautiful chapter.",
-
-        weddingCategory:
-            "WEDDING · BASIC",
-
-        weddingCardTitle:
-            "Farhod & Shirin",
-
-        weddingCardDescription:
-            "A timeless romantic invitation with an elegant editorial feel.",
-
-        birthdayCategory:
-            "BIRTHDAY · BASIC",
-
-        birthdayCardTitle:
-            "Amina — 25th Birthday",
-
-        birthdayCardDescription:
-            "A stylish birthday invitation made for an unforgettable evening.",
-
-        viewInvitation:
-            "View invitation",
-
-        closing:
-            "More invitations are being crafted.",
-
-        footer:
-            "Digital invitations for meaningful moments."
-    },
-
-
-    ru: {
-        navWeddings: "Свадьбы",
-        navBirthdays: "Дни рождения",
-
-        eyebrow: "Студия цифровых приглашений",
-
-        heroTitle:
-            "Приглашения, которые хочется помнить.",
-
-        heroDescription:
-            "Элегантные цифровые приглашения для свадеб, дней рождения и особенных моментов.",
-
-        weddingTitle:
-            "Свадьбы",
-
-        weddingDescription:
-            "Для самого красивого начала.",
-
-        birthdayTitle:
-            "Дни рождения",
-
-        birthdayDescription:
-            "Отпразднуйте новую прекрасную главу.",
-
-        weddingCategory:
-            "СВАДЬБА · BASIC",
-
-        weddingCardTitle:
-            "Фарход & Ширин",
-
-        weddingCardDescription:
-            "Романтичное приглашение с элегантным редакционным стилем.",
-
-        birthdayCategory:
-            "ДЕНЬ РОЖДЕНИЯ · BASIC",
-
-        birthdayCardTitle:
-            "Амина — 25 лет",
-
-        birthdayCardDescription:
-            "Стильное приглашение для незабываемого вечера.",
-
-        viewInvitation:
-            "Смотреть приглашение",
-
-        closing:
-            "Мы создаём новые приглашения.",
-
-        footer:
-            "Цифровые приглашения для важных моментов."
-    },
-
-
-    uz: {
-        navWeddings: "To'ylar",
-        navBirthdays: "Tug'ilgan kunlar",
-
-        eyebrow: "Raqamli taklifnomalar studiyasi",
-
-        heroTitle:
-            "Unutilmas bo'lish uchun yaratilgan taklifnomalar.",
-
-        heroDescription:
-            "To'ylar, tug'ilgan kunlar va hayotdagi go'zal lahzalar uchun nafis raqamli taklifnomalar.",
-
-        weddingTitle:
-            "To'ylar",
-
-        weddingDescription:
-            "Eng go'zal boshlanishingiz uchun.",
-
-        birthdayTitle:
-            "Tug'ilgan kunlar",
-
-        birthdayDescription:
-            "Yangi go'zal yoshingizni nishonlang.",
-
-        weddingCategory:
-            "TO'Y · BASIC",
-
-        weddingCardTitle:
-            "Farhod & Shirin",
-
-        weddingCardDescription:
-            "Nafis va romantik uslubdagi zamonaviy taklifnoma.",
-
-        birthdayCategory:
-            "TUG'ILGAN KUN · BASIC",
-
-        birthdayCardTitle:
-            "Amina — 25 yosh",
-
-        birthdayCardDescription:
-            "Unutilmas kecha uchun zamonaviy tug'ilgan kun taklifnomasi.",
-
-        viewInvitation:
-            "Taklifnomani ko'rish",
-
-        closing:
-            "Yangi taklifnomalar tayyorlanmoqda.",
-
-        footer:
-            "Muhim lahzalar uchun raqamli taklifnomalar."
-    }
-
-};
-
-
-/* ========================================
-   APPLY LANGUAGE
-======================================== */
-
-function initLanguage() {
-
-    const savedLanguage =
-        localStorage.getItem("einv-language") || "en";
-
-    setLanguage(savedLanguage);
-
-
-    document
-        .querySelectorAll(".lang-btn")
-        .forEach(button => {
-
-            button.addEventListener("click", () => {
-
-                const language =
-                    button.dataset.language;
-
-                setLanguage(language);
-
-            });
-
-        });
-
-}
-
-
-function setLanguage(language) {
-
-    if (!translations[language]) {
-        language = "en";
-    }
-
-    localStorage.setItem(
-        "einv-language",
-        language
-    );
-
-
-    document.documentElement.lang =
-        language;
-
-
-    document
-        .querySelectorAll(".lang-btn")
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.language === language
-            );
-
-        });
-
-
-    const t =
-        translations[language];
-
-
-    /*
-     * Navigation
-     */
-
-    setText(
-        '[data-nav="weddings"]',
-        t.navWeddings
-    );
-
-    setText(
-        '[data-nav="birthdays"]',
-        t.navBirthdays
-    );
-
-
-    /*
-     * Hero
-     */
-
-    setText(
-        ".eyebrow",
-        t.eyebrow
-    );
-
-    setHeroTitle(
-        t.heroTitle
-    );
-
-    setText(
-        ".hero-description",
-        t.heroDescription
-    );
-
-
-    /*
-     * Sections
-     */
-
-    const sections =
-        document.querySelectorAll(
-            ".template-section"
-        );
-
-
-    if (sections[0]) {
-
-        setText(
-            sections[0].querySelector("h2"),
-            t.weddingTitle
-        );
-
-        setText(
-            sections[0].querySelector(".section-heading p"),
-            t.weddingDescription
-        );
-
-        setText(
-            sections[0].querySelector(".template-category"),
-            t.weddingCategory
-        );
-
-        setText(
-            sections[0].querySelector(".template-info h3"),
-            t.weddingCardTitle
-        );
-
-        setText(
-            sections[0].querySelector(".template-info p"),
-            t.weddingCardDescription
-        );
-
-        setText(
-            sections[0].querySelector(".template-link"),
-            t.viewInvitation,
-            true
-        );
-    }
-
-
-    if (sections[1]) {
-
-        setText(
-            sections[1].querySelector("h2"),
-            t.birthdayTitle
-        );
-
-        setText(
-            sections[1].querySelector(".section-heading p"),
-            t.birthdayDescription
-        );
-
-        setText(
-            sections[1].querySelector(".template-category"),
-            t.birthdayCategory
-        );
-
-        setText(
-            sections[1].querySelector(".template-info h3"),
-            t.birthdayCardTitle
-        );
-
-        setText(
-            sections[1].querySelector(".template-info p"),
-            t.birthdayCardDescription
-        );
-
-        setText(
-            sections[1].querySelector(".template-link"),
-            t.viewInvitation,
-            true
-        );
-    }
-
-
-    /*
-     * Closing
-     */
-
-    setText(
-        ".closing p",
-        t.closing
-    );
-
-
-    /*
-     * Footer
-     */
-
-    setText(
-        "footer > span:last-child",
-        t.footer
-    );
-
-}
-
-
-/* ========================================
-   HELPERS
-======================================== */
-
-function setText(
-    selectorOrElement,
-    text,
-    preserveArrow = false
-) {
-
-    const element =
-        typeof selectorOrElement === "string"
-            ? document.querySelector(selectorOrElement)
-            : selectorOrElement;
-
-
-    if (!element) {
-        return;
-    }
-
-
-    if (preserveArrow) {
-
-        const arrow =
-            element.querySelector("span");
-
-        element.textContent = text;
-
-        if (arrow) {
-            element.appendChild(arrow);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Amina — 25th Birthday</title>
+
+    <meta
+        name="description"
+        content="Amina's 25th birthday celebration invitation."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Manrope:wght@400;500;600&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        :root {
+            --bg: #17120f;
+            --bg-soft: #211915;
+            --card: rgba(255, 255, 255, 0.045);
+
+            --gold: #d4b27a;
+            --gold-light: #ead4a9;
+
+            --cream: #f5eee3;
+            --muted: #b8a999;
+
+            --border: rgba(212, 178, 122, 0.22);
+
+            --serif: "Cormorant Garamond", Georgia, serif;
+            --script: "Great Vibes", cursive;
+            --sans: "Manrope", Arial, sans-serif;
         }
 
-        return;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(212, 178, 122, 0.12),
+                    transparent 35%
+                ),
+                var(--bg);
+
+            color: var(--cream);
+
+            font-family: var(--sans);
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    rgba(255,255,255,0.015) 1px,
+                    transparent 1px
+                );
+
+            background-size: 100% 4px;
+
+            opacity: 0.15;
+
+            z-index: 100;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            background: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+        }
 
 
-    element.textContent = text;
-}
+        /* ========================================
+           OPENING
+        ======================================== */
+
+        .opening {
+            position: fixed;
+            inset: 0;
+
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 2rem;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #2a211b,
+                    #120e0c 75%
+                );
+
+            transition:
+                opacity 0.8s ease,
+                visibility 0.8s ease;
+        }
+
+        .opening.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .opening-content {
+            width: min(420px, 100%);
+
+            text-align: center;
+        }
+
+        .opening-small {
+            color: var(--gold);
+
+            font-size: 0.62rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+        }
+
+        .opening-title {
+            margin: 1.5rem 0 0.3rem;
+
+            font-family: var(--script);
+
+            font-size: clamp(4rem, 18vw, 7rem);
+
+            font-weight: 400;
+
+            color: var(--cream);
+        }
+
+        .opening-subtitle {
+            color: var(--muted);
+
+            font-family: var(--serif);
+
+            font-size: 1.15rem;
+            letter-spacing: 0.08em;
+        }
+
+        .open-button {
+            margin-top: 3rem;
+
+            padding: 0.9rem 2rem;
+
+            border: 1px solid var(--border);
+
+            color: var(--gold-light);
+
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+
+            transition:
+                background 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .open-button:hover {
+            background: rgba(212, 178, 122, 0.08);
+            border-color: var(--gold);
+        }
 
 
-function setHeroTitle(text) {
+        /* ========================================
+           HEADER
+        ======================================== */
 
-    const title =
-        document.querySelector(".hero h1");
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
 
-    if (!title) {
-        return;
-    }
+            z-index: 20;
 
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-    /*
-     * Keep the editorial line break
-     * and italic styling.
-     */
+            padding: 1.5rem 5%;
+        }
 
-    const words =
-        text.split(" ");
+        .brand {
+            color: var(--gold);
 
+            font-family: var(--serif);
 
-    if (words.length >= 3) {
+            font-size: 1.3rem;
+            letter-spacing: 0.2em;
+        }
 
-        const firstPart =
-            words.slice(
-                0,
-                Math.ceil(words.length * 0.65)
-            ).join(" ");
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
 
-        const secondPart =
-            words.slice(
-                Math.ceil(words.length * 0.65)
-            ).join(" ");
+        .language-button,
+        .music-button {
+            padding: 0.45rem 0.55rem;
 
+            border: 1px solid transparent;
 
-        title.innerHTML =
-            `${firstPart}<br><em>${secondPart}</em>`;
+            color: var(--muted);
 
-    } else {
+            font-size: 0.58rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
 
-        title.textContent = text;
-
-    }
-
-}
-
-
-/* ========================================
-   NAVIGATION
-======================================== */
-
-function initNavigation() {
-
-    document
-        .querySelectorAll(".main-nav a")
-        .forEach(link => {
-
-            link.addEventListener(
-                "click",
-                event => {
-
-                    const targetId =
-                        link.getAttribute("href");
-
-                    if (!targetId.startsWith("#")) {
-                        return;
-                    }
+        .language-button.active,
+        .language-button:hover,
+        .music-button:hover {
+            color: var(--cream);
+            border-color: var(--border);
+        }
 
 
-                    const target =
-                        document.querySelector(
-                            targetId
+        /* ========================================
+           HERO
+        ======================================== */
+
+        .hero {
+            position: relative;
+
+            min-height: 100svh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 6rem 1.5rem 4rem;
+
+            text-align: center;
+
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 75vw;
+            height: 75vw;
+
+            max-width: 650px;
+            max-height: 650px;
+
+            border: 1px solid rgba(212, 178, 122, 0.1);
+
+            border-radius: 50%;
+
+            animation: rotateSlow 30s linear infinite;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 55vw;
+            height: 55vw;
+
+            max-width: 480px;
+            max-height: 480px;
+
+            border: 1px solid rgba(212, 178, 122, 0.08);
+
+            border-radius: 50%;
+
+            animation: rotateSlowReverse 24s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .eyebrow {
+            color: var(--gold);
+
+            font-size: 0.62rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            margin-top: 1.5rem;
+
+            font-family: var(--script);
+
+            font-size: clamp(5rem, 21vw, 10rem);
+
+            font-weight: 400;
+            line-height: 0.9;
+
+            color: var(--cream);
+        }
+
+        .hero h1 span {
+            display: block;
+
+            margin-top: 1rem;
+
+            font-family: var(--serif);
+
+            font-size: clamp(1.8rem, 7vw, 3rem);
+
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+
+            color: var(--gold-light);
+        }
+
+        .hero-date {
+            margin-top: 2.2rem;
+
+            color: var(--muted);
+
+            font-family: var(--serif);
+
+            font-size: 1.2rem;
+            letter-spacing: 0.12em;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            color: var(--muted);
+
+            font-size: 0.55rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+
+            animation: breathe 2s ease-in-out infinite;
+        }
+
+
+        /* ========================================
+           GENERAL SECTIONS
+        ======================================== */
+
+        section {
+            position: relative;
+
+            width: min(900px, 90%);
+
+            margin: 0 auto;
+
+            padding: 6rem 0;
+        }
+
+        .section-label {
+            margin-bottom: 1rem;
+
+            color: var(--gold);
+
+            font-size: 0.58rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            margin-bottom: 1.5rem;
+
+            font-family: var(--serif);
+
+            font-size: clamp(2.4rem, 8vw, 4rem);
+
+            font-weight: 400;
+
+            line-height: 1;
+        }
+
+        .section-title em {
+            color: var(--gold-light);
+        }
+
+
+        /* ========================================
+           MESSAGE
+        ======================================== */
+
+        .message {
+            text-align: center;
+
+            max-width: 680px;
+        }
+
+        .message p {
+            color: var(--muted);
+
+            font-family: var(--serif);
+
+            font-size: clamp(1.2rem, 4vw, 1.55rem);
+
+            line-height: 1.7;
+        }
+
+        .signature {
+            margin-top: 2rem;
+
+            color: var(--gold-light);
+
+            font-family: var(--script);
+
+            font-size: 2.5rem;
+        }
+
+
+        /* ========================================
+           COUNTDOWN
+        ======================================== */
+
+        .countdown-section {
+            text-align: center;
+        }
+
+        .countdown {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 0.8rem;
+
+            max-width: 650px;
+
+            margin: 3rem auto 0;
+        }
+
+        .countdown-item {
+            padding: 1.5rem 0.5rem;
+
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+
+            background: var(--card);
+        }
+
+        .countdown-number {
+            display: block;
+
+            color: var(--gold-light);
+
+            font-family: var(--serif);
+
+            font-size: clamp(2rem, 7vw, 3.2rem);
+
+            line-height: 1;
+        }
+
+        .countdown-label {
+            display: block;
+
+            margin-top: 0.6rem;
+
+            color: var(--muted);
+
+            font-size: 0.52rem;
+
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+
+        /* ========================================
+           EVENT
+        ======================================== */
+
+        .event-card {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            border: 1px solid var(--border);
+
+            background: var(--card);
+        }
+
+        .event-main,
+        .event-side {
+            padding: 2.5rem;
+        }
+
+        .event-side {
+            border-left: 1px solid var(--border);
+        }
+
+        .event-item {
+            margin-bottom: 2rem;
+        }
+
+        .event-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-label {
+            margin-bottom: 0.4rem;
+
+            color: var(--gold);
+
+            font-size: 0.55rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+        }
+
+        .event-value {
+            color: var(--cream);
+
+            font-family: var(--serif);
+
+            font-size: 1.5rem;
+        }
+
+        .event-note {
+            margin-top: 0.3rem;
+
+            color: var(--muted);
+
+            font-size: 0.7rem;
+        }
+
+        .map-link {
+            display: inline-block;
+
+            margin-top: 1rem;
+
+            color: var(--gold-light);
+
+            font-size: 0.62rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+
+            border-bottom: 1px solid var(--border);
+
+            padding-bottom: 0.3rem;
+        }
+
+
+        /* ========================================
+           GALLERY
+        ======================================== */
+
+        .gallery {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 0.8rem;
+        }
+
+        .gallery-item {
+            position: relative;
+
+            aspect-ratio: 1 / 1;
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            background: #211915;
+        }
+
+        .gallery-item:first-child {
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+
+        /* ========================================
+           RSVP
+        ======================================== */
+
+        .rsvp {
+            max-width: 650px;
+
+            text-align: center;
+        }
+
+        .rsvp-form {
+            margin-top: 2.5rem;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 1rem;
+        }
+
+        .rsvp-form input,
+        .rsvp-form textarea {
+            width: 100%;
+
+            padding: 1rem 1.1rem;
+
+            border: 1px solid var(--border);
+
+            outline: none;
+
+            background: var(--card);
+
+            color: var(--cream);
+
+            font-size: 0.75rem;
+
+            transition:
+                border-color 0.3s ease;
+        }
+
+        .rsvp-form textarea {
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+        .rsvp-form input:focus,
+        .rsvp-form textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .rsvp-button {
+            align-self: center;
+
+            padding: 1rem 2rem;
+
+            border: 1px solid var(--gold);
+
+            color: var(--gold-light);
+
+            font-size: 0.62rem;
+
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
+        }
+
+        .rsvp-button:hover {
+            background: var(--gold);
+            color: var(--bg);
+        }
+
+        .rsvp-message {
+            min-height: 1.5rem;
+
+            margin-top: 1rem;
+
+            color: var(--gold);
+
+            font-size: 0.7rem;
+        }
+
+
+        /* ========================================
+           WISHES
+        ======================================== */
+
+        .wishes {
+            max-width: 700px;
+        }
+
+        .wish-form {
+            display: flex;
+            gap: 0.7rem;
+
+            margin-top: 2rem;
+        }
+
+        .wish-form input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 0.9rem;
+
+            border: 1px solid var(--border);
+
+            outline: none;
+
+            background: var(--card);
+
+            color: var(--cream);
+        }
+
+        .wish-form button {
+            padding: 0.9rem 1.3rem;
+
+            border: 1px solid var(--gold);
+
+            color: var(--gold);
+
+            font-size: 0.6rem;
+
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .wish-list {
+            display: flex;
+            flex-direction: column;
+
+            gap: 0.7rem;
+
+            margin-top: 1.5rem;
+        }
+
+        .wish {
+            padding: 1rem;
+
+            border-left: 1px solid var(--gold);
+
+            background: var(--card);
+
+            color: var(--muted);
+
+            font-family: var(--serif);
+
+            font-size: 1.05rem;
+        }
+
+
+        /* ========================================
+           LIGHTBOX
+        ======================================== */
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+
+            z-index: 900;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 2rem;
+
+            background: rgba(8, 6, 5, 0.95);
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity 0.4s ease,
+                visibility 0.4s ease;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox img {
+            width: auto;
+            max-width: min(90vw, 900px);
+            max-height: 85vh;
+
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+
+            top: 1.5rem;
+            right: 1.5rem;
+
+            color: var(--cream);
+
+            font-size: 1.5rem;
+        }
+
+
+        /* ========================================
+           SHARE
+        ======================================== */
+
+        .share {
+            text-align: center;
+        }
+
+        .share-buttons {
+            display: flex;
+
+            justify-content: center;
+            flex-wrap: wrap;
+
+            gap: 0.7rem;
+
+            margin-top: 2rem;
+        }
+
+        .share-button {
+            padding: 0.8rem 1.2rem;
+
+            border: 1px solid var(--border);
+
+            color: var(--muted);
+
+            font-size: 0.6rem;
+
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+
+            transition:
+                color 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .share-button:hover {
+            color: var(--gold-light);
+            border-color: var(--gold);
+        }
+
+
+        /* ========================================
+           FOOTER
+        ======================================== */
+
+        footer {
+            padding: 4rem 1.5rem 3rem;
+
+            border-top: 1px solid var(--border);
+
+            text-align: center;
+        }
+
+        .footer-name {
+            color: var(--gold-light);
+
+            font-family: var(--script);
+
+            font-size: 2.8rem;
+        }
+
+        .footer-text {
+            margin-top: 1rem;
+
+            color: var(--muted);
+
+            font-size: 0.55rem;
+
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+
+        /* ========================================
+           TOAST
+        ======================================== */
+
+        .toast {
+            position: fixed;
+
+            left: 50%;
+            bottom: 2rem;
+
+            z-index: 1200;
+
+            transform:
+                translate(-50%, 20px);
+
+            padding: 0.8rem 1.2rem;
+
+            background: #251d18;
+
+            border: 1px solid var(--border);
+
+            color: var(--cream);
+
+            font-size: 0.65rem;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity 0.3s ease,
+                transform 0.3s ease,
+                visibility 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+
+            transform:
+                translate(-50%, 0);
+        }
+
+
+        /* ========================================
+           PETALS
+        ======================================== */
+
+        .petals {
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            z-index: 10;
+
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            top: -30px;
+
+            width: 7px;
+            height: 11px;
+
+            border-radius: 100% 0 100% 0;
+
+            background: rgba(212, 178, 122, 0.3);
+
+            animation:
+                fall linear infinite;
+        }
+
+
+        /* ========================================
+           ANIMATIONS
+        ======================================== */
+
+        @keyframes rotateSlow {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotateSlowReverse {
+            from {
+                transform: rotate(360deg);
+            }
+
+            to {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes breathe {
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: translateX(-50%);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -5px);
+            }
+        }
+
+        @keyframes fall {
+            from {
+                transform:
+                    translate3d(0, -30px, 0)
+                    rotate(0deg);
+            }
+
+            to {
+                transform:
+                    translate3d(100px, 110vh, 0)
+                    rotate(360deg);
+            }
+        }
+
+
+        /* ========================================
+           RESPONSIVE
+        ======================================== */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 1.2rem 5%;
+            }
+
+            .hero {
+                padding-top: 5rem;
+            }
+
+            section {
+                width: 90%;
+
+                padding: 4.5rem 0;
+            }
+
+            .countdown {
+                gap: 0.35rem;
+            }
+
+            .countdown-item {
+                padding: 1.1rem 0.3rem;
+            }
+
+            .event-card {
+                grid-template-columns: 1fr;
+            }
+
+            .event-side {
+                border-left: 0;
+                border-top: 1px solid var(--border);
+            }
+
+            .event-main,
+            .event-side {
+                padding: 1.7rem;
+            }
+
+            .gallery {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .gallery-item:first-child {
+                grid-row: span 1;
+                aspect-ratio: 1 / 1;
+            }
+
+            .wish-form {
+                flex-direction: column;
+            }
+
+            .wish-form button {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 420px) {
+
+            .controls {
+                gap: 0.15rem;
+            }
+
+            .language-button,
+            .music-button {
+                padding: 0.35rem;
+            }
+
+            .countdown-number {
+                font-size: 1.8rem;
+            }
+
+            .countdown-label {
+                font-size: 0.43rem;
+            }
+
+            .event-main,
+            .event-side {
+                padding: 1.4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ========================================
+         OPENING
+    ======================================== -->
+
+    <div class="opening" id="opening">
+
+        <div class="opening-content">
+
+            <div class="opening-small">
+                You're invited
+            </div>
+
+            <div class="opening-title">
+                Amina
+            </div>
+
+            <div class="opening-subtitle">
+                25th Birthday
+            </div>
+
+            <button
+                class="open-button"
+                id="openInvitation"
+            >
+                Open Invitation
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================
+         PETALS
+    ======================================== -->
+
+    <div
+        class="petals"
+        id="petals"
+        aria-hidden="true"
+    ></div>
+
+
+    <!-- ========================================
+         HEADER
+    ======================================== -->
+
+    <header>
+
+        <a
+            href="#"
+            class="brand"
+        >
+            E·INV
+        </a>
+
+        <div class="controls">
+
+            <button
+                class="language-button active"
+                data-language="en"
+            >
+                EN
+            </button>
+
+            <button
+                class="language-button"
+                data-language="ru"
+            >
+                RU
+            </button>
+
+            <button
+                class="language-button"
+                data-language="uz"
+            >
+                UZ
+            </button>
+
+            <button
+                class="music-button"
+                id="musicButton"
+                aria-label="Toggle music"
+            >
+                ♪
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- ========================================
+             HERO
+        ======================================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    You're invited
+                </div>
+
+                <h1>
+                    Amina
+                    <span>25th Birthday</span>
+                </h1>
+
+                <div class="hero-date">
+                    November 15 · 19:00
+                </div>
+
+            </div>
+
+            <div class="scroll-hint">
+                Scroll to discover
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             MESSAGE
+        ======================================== -->
+
+        <section class="message">
+
+            <div class="section-label">
+                A special evening
+            </div>
+
+            <h2 class="section-title">
+                Come celebrate
+                <em>with me.</em>
+            </h2>
+
+            <p>
+                Another year, another beautiful chapter.
+                I'd love to celebrate this special evening
+                surrounded by the people who make life
+                unforgettable.
+            </p>
+
+            <div class="signature">
+                Amina
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             COUNTDOWN
+        ======================================== -->
+
+        <section class="countdown-section">
+
+            <div class="section-label">
+                The countdown
+            </div>
+
+            <h2 class="section-title">
+                Until we <em>celebrate.</em>
+            </h2>
+
+            <div class="countdown">
+
+                <div class="countdown-item">
+                    <span
+                        class="countdown-number"
+                        id="days"
+                    >
+                        00
+                    </span>
+
+                    <span class="countdown-label">
+                        Days
+                    </span>
+                </div>
+
+                <div class="countdown-item">
+                    <span
+                        class="countdown-number"
+                        id="hours"
+                    >
+                        00
+                    </span>
+
+                    <span class="countdown-label">
+                        Hours
+                    </span>
+                </div>
+
+                <div class="countdown-item">
+                    <span
+                        class="countdown-number"
+                        id="minutes"
+                    >
+                        00
+                    </span>
+
+                    <span class="countdown-label">
+                        Minutes
+                    </span>
+                </div>
+
+                <div class="countdown-item">
+                    <span
+                        class="countdown-number"
+                        id="seconds"
+                    >
+                        00
+                    </span>
+
+                    <span class="countdown-label">
+                        Seconds
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             EVENT
+        ======================================== -->
+
+        <section>
+
+            <div class="section-label">
+                Save the date
+            </div>
+
+            <h2 class="section-title">
+                The <em>details.</em>
+            </h2>
+
+            <div class="event-card">
+
+                <div class="event-main">
+
+                    <div class="event-item">
+
+                        <div class="event-label">
+                            Date
+                        </div>
+
+                        <div class="event-value">
+                            November 15, 2026
+                        </div>
+
+                        <div class="event-note">
+                            Sunday
+                        </div>
+
+                    </div>
+
+                    <div class="event-item">
+
+                        <div class="event-label">
+                            Time
+                        </div>
+
+                        <div class="event-value">
+                            19:00
+                        </div>
+
+                        <div class="event-note">
+                            Please arrive a little early.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="event-side">
+
+                    <div class="event-item">
+
+                        <div class="event-label">
+                            Venue
+                        </div>
+
+                        <div class="event-value">
+                            Sky Lounge
+                        </div>
+
+                        <div class="event-note">
+                            Tashkent, Uzbekistan
+                        </div>
+
+                        <a
+                            class="map-link"
+                            href="https://www.google.com/maps/search/?api=1&query=Sky+Lounge+Tashkent"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            Open in Maps ↗
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             GALLERY
+        ======================================== -->
+
+        <section>
+
+            <div class="section-label">
+                Memories
+            </div>
+
+            <h2 class="section-title">
+                A few <em>moments.</em>
+            </h2>
+
+            <div class="gallery">
+
+                <div class="gallery-item">
+                    <img
+                        src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=900&q=85"
+                        alt="Birthday celebration"
+                        loading="lazy"
+                    >
+                </div>
+
+                <div class="gallery-item">
+                    <img
+                        src="https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&w=700&q=85"
+                        alt="Birthday cake"
+                        loading="lazy"
+                    >
+                </div>
+
+                <div class="gallery-item">
+                    <img
+                        src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=700&q=85"
+                        alt="Birthday decorations"
+                        loading="lazy"
+                    >
+                </div>
+
+                <div class="gallery-item">
+                    <img
+                        src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=700&q=85"
+                        alt="Friends celebrating"
+                        loading="lazy"
+                    >
+                </div>
+
+                <div class="gallery-item">
+                    <img
+                        src="https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=700&q=85"
+                        alt="Celebration"
+                        loading="lazy"
+                    >
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             RSVP
+        ======================================== -->
+
+        <section class="rsvp">
+
+            <div class="section-label">
+                RSVP
+            </div>
+
+            <h2 class="section-title">
+                Will you <em>join me?</em>
+            </h2>
+
+            <p style="
+                color: var(--muted);
+                font-family: var(--serif);
+                font-size: 1.1rem;
+                line-height: 1.7;
+            ">
+                Please let me know if you'll be celebrating
+                with us.
+            </p>
+
+            <form
+                class="rsvp-form"
+                id="rsvpForm"
+            >
+
+                <input
+                    type="text"
+                    id="guestName"
+                    placeholder="Your name"
+                    required
+                >
+
+                <input
+                    type="number"
+                    id="guestCount"
+                    placeholder="Number of guests"
+                    min="1"
+                    max="10"
+                    required
+                >
+
+                <textarea
+                    id="guestNote"
+                    placeholder="A message for Amina (optional)"
+                ></textarea>
+
+                <button
+                    class="rsvp-button"
+                    type="submit"
+                >
+                    Confirm Attendance
+                </button>
+
+            </form>
+
+            <div
+                class="rsvp-message"
+                id="rsvpMessage"
+            ></div>
+
+        </section>
+
+
+        <!-- ========================================
+             WISHES
+        ======================================== -->
+
+        <section class="wishes">
+
+            <div class="section-label">
+                Leave a little love
+            </div>
+
+            <h2 class="section-title">
+                Birthday <em>wishes.</em>
+            </h2>
+
+            <form
+                class="wish-form"
+                id="wishForm"
+            >
+
+                <input
+                    type="text"
+                    id="wishInput"
+                    placeholder="Write a birthday wish..."
+                    maxlength="180"
+                    required
+                >
+
+                <button type="submit">
+                    Send
+                </button>
+
+            </form>
+
+            <div
+                class="wish-list"
+                id="wishList"
+            ></div>
+
+        </section>
+
+
+        <!-- ========================================
+             SHARE
+        ======================================== -->
+
+        <section class="share">
+
+            <div class="section-label">
+                Spread the word
+            </div>
+
+            <h2 class="section-title">
+                Share the <em>invitation.</em>
+            </h2>
+
+            <div class="share-buttons">
+
+                <button
+                    class="share-button"
+                    id="copyLink"
+                >
+                    Copy Link
+                </button>
+
+                <a
+                    class="share-button"
+                    id="telegramShare"
+                    href="#"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Telegram
+                </a>
+
+                <a
+                    class="share-button"
+                    id="whatsappShare"
+                    href="#"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    WhatsApp
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================
+         FOOTER
+    ======================================== -->
+
+    <footer>
+
+        <div class="footer-name">
+            Amina
+        </div>
+
+        <div class="footer-text">
+            With love · 25th birthday · 2026
+        </div>
+
+    </footer>
+
+
+    <!-- ========================================
+         LIGHTBOX
+    ======================================== -->
+
+    <div
+        class="lightbox"
+        id="lightbox"
+    >
+
+        <button
+            class="lightbox-close"
+            id="lightboxClose"
+            aria-label="Close image"
+        >
+            ×
+        </button>
+
+        <img
+            id="lightboxImage"
+            src=""
+            alt="Expanded gallery image"
+        >
+
+    </div>
+
+
+    <!-- ========================================
+         TOAST
+    ======================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <!-- ========================================
+         AUDIO
+    ======================================== -->
+
+    <audio
+        id="backgroundMusic"
+        loop
+        preload="none"
+    >
+        <source
+            src="https://cdn.pixabay.com/audio/2022/10/25/audio_946b7a5f9c.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+
+
+    <script>
+
+        /* ========================================
+           OPENING
+        ======================================== */
+
+        const opening =
+            document.getElementById("opening");
+
+        const openInvitation =
+            document.getElementById("openInvitation");
+
+        openInvitation.addEventListener(
+            "click",
+            () => {
+
+                opening.classList.add("hidden");
+
+                startMusic();
+
+            }
+        );
+
+
+        /* ========================================
+           MUSIC
+        ======================================== */
+
+        const music =
+            document.getElementById("backgroundMusic");
+
+        const musicButton =
+            document.getElementById("musicButton");
+
+        let musicPlaying = false;
+
+        async function startMusic() {
+
+            try {
+
+                await music.play();
+
+                musicPlaying = true;
+
+                musicButton.textContent = "♫";
+
+            } catch (error) {
+
+                musicPlaying = false;
+
+            }
+
+        }
+
+        musicButton.addEventListener(
+            "click",
+            async () => {
+
+                if (musicPlaying) {
+
+                    music.pause();
+
+                    musicPlaying = false;
+
+                    musicButton.textContent = "♪";
+
+                } else {
+
+                    try {
+
+                        await music.play();
+
+                        musicPlaying = true;
+
+                        musicButton.textContent = "♫";
+
+                    } catch (error) {
+
+                        showToast(
+                            "Music could not be started."
                         );
 
-                    if (!target) {
-                        return;
                     }
 
+                }
 
-                    event.preventDefault();
-
-
-                    const headerHeight =
-                        document.querySelector(
-                            "header"
-                        )?.offsetHeight || 0;
+            }
+        );
 
 
-                    const position =
-                        target.getBoundingClientRect().top +
-                        window.scrollY -
-                        headerHeight -
-                        20;
+        /* ========================================
+           COUNTDOWN
+        ======================================== */
+
+        const targetDate =
+            new Date(
+                "November 15, 2026 19:00:00"
+            ).getTime();
 
 
-                    window.scrollTo({
-                        top: position,
-                        behavior: "smooth"
-                    });
+        function updateCountdown() {
+
+            const now =
+                new Date().getTime();
+
+            const distance =
+                targetDate - now;
+
+
+            if (distance <= 0) {
+
+                document.getElementById("days")
+                    .textContent = "00";
+
+                document.getElementById("hours")
+                    .textContent = "00";
+
+                document.getElementById("minutes")
+                    .textContent = "00";
+
+                document.getElementById("seconds")
+                    .textContent = "00";
+
+                return;
+            }
+
+
+            const days =
+                Math.floor(
+                    distance /
+                    (1000 * 60 * 60 * 24)
+                );
+
+            const hours =
+                Math.floor(
+                    (distance %
+                        (1000 * 60 * 60 * 24)) /
+                    (1000 * 60 * 60)
+                );
+
+            const minutes =
+                Math.floor(
+                    (distance %
+                        (1000 * 60 * 60)) /
+                    (1000 * 60)
+                );
+
+            const seconds =
+                Math.floor(
+                    (distance %
+                        (1000 * 60)) /
+                    1000
+                );
+
+
+            document.getElementById("days")
+                .textContent =
+                String(days).padStart(2, "0");
+
+            document.getElementById("hours")
+                .textContent =
+                String(hours).padStart(2, "0");
+
+            document.getElementById("minutes")
+                .textContent =
+                String(minutes).padStart(2, "0");
+
+            document.getElementById("seconds")
+                .textContent =
+                String(seconds).padStart(2, "0");
+
+        }
+
+        updateCountdown();
+
+        setInterval(
+            updateCountdown,
+            1000
+        );
+
+
+        /* ========================================
+           LANGUAGE
+        ======================================== */
+
+        const languageButtons =
+            document.querySelectorAll(
+                ".language-button"
+            );
+
+
+        const languageData = {
+
+            en: {
+                open: "Open Invitation",
+                invited: "You're invited",
+                birthday: "25th Birthday",
+                date: "November 15 · 19:00",
+                special: "A special evening",
+                celebrate: "Come celebrate with me.",
+                countdown: "Until we celebrate.",
+                details: "The details.",
+                rsvp: "Will you join me?",
+                wishes: "Birthday wishes.",
+                share: "Share the invitation.",
+                copy: "Copy Link",
+                send: "Send",
+                confirm: "Confirm Attendance"
+            },
+
+            ru: {
+                open: "Открыть приглашение",
+                invited: "Вы приглашены",
+                birthday: "25-й день рождения",
+                date: "15 ноября · 19:00",
+                special: "Особенный вечер",
+                celebrate: "Приходи отпраздновать со мной.",
+                countdown: "До нашей встречи.",
+                details: "Детали вечера.",
+                rsvp: "Ты будешь со мной?",
+                wishes: "Поздравления",
+                share: "Поделиться приглашением",
+                copy: "Скопировать ссылку",
+                send: "Отправить",
+                confirm: "Подтвердить присутствие"
+            },
+
+            uz: {
+                open: "Taklifnomani ochish",
+                invited: "Siz taklif etilgansiz",
+                birthday: "25 yosh",
+                date: "15 noyabr · 19:00",
+                special: "Maxsus kecha",
+                celebrate: "Men bilan birga nishonlang.",
+                countdown: "Bayramgacha qolgan vaqt.",
+                details: "Tadbir tafsilotlari.",
+                rsvp: "Men bilan birga bo'lasizmi?",
+                wishes: "Tug'ilgan kun tilaklari.",
+                share: "Taklifnomani ulashing.",
+                copy: "Havolani nusxalash",
+                send: "Yuborish",
+                confirm: "Ishtirokingizni tasdiqlang"
+            }
+
+        };
+
+
+        function setLanguage(language) {
+
+            if (!languageData[language]) {
+                language = "en";
+            }
+
+            localStorage.setItem(
+                "einv-language",
+                language
+            );
+
+            document.documentElement.lang =
+                language;
+
+
+            languageButtons.forEach(
+                button => {
+
+                    button.classList.toggle(
+                        "active",
+                        button.dataset.language === language
+                    );
 
                 }
             );
 
-        });
 
-}
+            const t =
+                languageData[language];
+
+
+            openInvitation.textContent =
+                t.open;
+
+
+            document.querySelector(
+                ".eyebrow"
+            ).textContent =
+                t.invited;
+
+
+            document.querySelector(
+                ".hero span"
+            ).textContent =
+                t.birthday;
+
+
+            document.querySelector(
+                ".hero-date"
+            ).textContent =
+                t.date;
+
+
+            document.querySelector(
+                ".message .section-label"
+            ).textContent =
+                t.special;
+
+
+            document.querySelector(
+                ".message .section-title"
+            ).textContent =
+                t.celebrate;
+
+
+            document.querySelector(
+                ".countdown-section .section-title"
+            ).textContent =
+                t.countdown;
+
+
+            document.querySelector(
+                ".rsvp .section-title"
+            ).textContent =
+                t.rsvp;
+
+
+            document.querySelector(
+                ".wishes .section-title"
+            ).textContent =
+                t.wishes;
+
+
+            document.querySelector(
+                ".share .section-title"
+            ).textContent =
+                t.share;
+
+
+            document.getElementById(
+                "copyLink"
+            ).textContent =
+                t.copy;
+
+
+            document.querySelector(
+                ".wish-form button"
+            ).textContent =
+                t.send;
+
+
+            document.querySelector(
+                ".rsvp-button"
+            ).textContent =
+                t.confirm;
+
+        }
+
+
+        languageButtons.forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        setLanguage(
+                            button.dataset.language
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+        setLanguage(
+            localStorage.getItem(
+                "einv-language"
+            ) || "en"
+        );
+
+
+        /* ========================================
+           GALLERY LIGHTBOX
+        ======================================== */
+
+        const lightbox =
+            document.getElementById("lightbox");
+
+        const lightboxImage =
+            document.getElementById("lightboxImage");
+
+        const lightboxClose =
+            document.getElementById("lightboxClose");
+
+
+        document
+            .querySelectorAll(".gallery-item img")
+            .forEach(image => {
+
+                image.addEventListener(
+                    "click",
+                    () => {
+
+                        lightboxImage.src =
+                            image.src;
+
+                        lightboxImage.alt =
+                            image.alt;
+
+                        lightbox.classList.add(
+                            "active"
+                        );
+
+                    }
+                );
+
+            });
+
+
+        function closeLightbox() {
+
+            lightbox.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        lightboxClose.addEventListener(
+            "click",
+            closeLightbox
+        );
+
+
+        lightbox.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target === lightbox
+                ) {
+                    closeLightbox();
+                }
+
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (event.key === "Escape") {
+                    closeLightbox();
+                }
+
+            }
+        );
+
+
+        /* ========================================
+           RSVP
+        ======================================== */
+
+        const rsvpForm =
+            document.getElementById("rsvpForm");
+
+        const rsvpMessage =
+            document.getElementById("rsvpMessage");
+
+
+        rsvpForm.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+
+                const name =
+                    document.getElementById(
+                        "guestName"
+                    ).value.trim();
+
+                const guests =
+                    document.getElementById(
+                        "guestCount"
+                    ).value;
+
+                const note =
+                    document.getElementById(
+                        "guestNote"
+                    ).value.trim();
+
+
+                const rsvp = {
+                    name,
+                    guests,
+                    note,
+                    createdAt:
+                        new Date().toISOString()
+                };
+
+
+                localStorage.setItem(
+                    "einv-birthday-rsvp",
+                    JSON.stringify(rsvp)
+                );
+
+
+                rsvpMessage.textContent =
+                    `Thank you, ${name}! Your RSVP has been saved.`;
+
+                rsvpForm.reset();
+
+                showToast(
+                    "Your RSVP has been saved."
+                );
+
+            }
+        );
+
+
+        /* ========================================
+           WISH WALL
+        ======================================== */
+
+        const wishForm =
+            document.getElementById("wishForm");
+
+        const wishInput =
+            document.getElementById("wishInput");
+
+        const wishList =
+            document.getElementById("wishList");
+
+
+        function getWishes() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem(
+                        "einv-birthday-wishes"
+                    )
+                ) || [];
+
+            } catch {
+
+                return [];
+
+            }
+
+        }
+
+
+        function renderWishes() {
+
+            const wishes =
+                getWishes();
+
+            wishList.innerHTML = "";
+
+
+            wishes.forEach(
+                wish => {
+
+                    const element =
+                        document.createElement(
+                            "div"
+                        );
+
+                    element.className =
+                        "wish";
+
+                    element.textContent =
+                        wish;
+
+                    wishList.appendChild(
+                        element
+                    );
+
+                }
+            );
+
+        }
+
+
+        wishForm.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+
+                const value =
+                    wishInput.value.trim();
+
+
+                if (!value) {
+                    return;
+                }
+
+
+                const wishes =
+                    getWishes();
+
+                wishes.unshift(value);
+
+
+                localStorage.setItem(
+                    "einv-birthday-wishes",
+                    JSON.stringify(wishes)
+                );
+
+
+                wishInput.value = "";
+
+                renderWishes();
+
+                showToast(
+                    "Your birthday wish was added."
+                );
+
+            }
+        );
+
+
+        renderWishes();
+
+
+        /* ========================================
+           SHARE
+        ======================================== */
+
+        const currentUrl =
+            window.location.href;
+
+
+        document.getElementById(
+            "telegramShare"
+        ).href =
+            "https://t.me/share/url?url=" +
+            encodeURIComponent(currentUrl) +
+            "&text=" +
+            encodeURIComponent(
+                "You're invited to Amina's 25th birthday!"
+            );
+
+
+        document.getElementById(
+            "whatsappShare"
+        ).href =
+            "https://wa.me/?text=" +
+            encodeURIComponent(
+                "You're invited to Amina's 25th birthday! " +
+                currentUrl
+            );
+
+
+        document.getElementById(
+            "copyLink"
+        ).addEventListener(
+            "click",
+            async () => {
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        currentUrl
+                    );
+
+                    showToast(
+                        "Invitation link copied."
+                    );
+
+                } catch {
+
+                    showToast(
+                        "Please copy the link from your browser."
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* ========================================
+           TOAST
+        ======================================== */
+
+        const toast =
+            document.getElementById("toast");
+
+        let toastTimeout;
+
+
+        function showToast(message) {
+
+            toast.textContent =
+                message;
+
+            toast.classList.add(
+                "show"
+            );
+
+
+            clearTimeout(
+                toastTimeout
+            );
+
+
+            toastTimeout =
+                setTimeout(
+                    () => {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    2500
+                );
+
+        }
+
+
+        /* ========================================
+           PETALS
+        ======================================== */
+
+        const petals =
+            document.getElementById("petals");
+
+
+        function createPetal() {
+
+            const petal =
+                document.createElement(
+                    "span"
+                );
+
+            petal.className =
+                "petal";
+
+
+            petal.style.left =
+                Math.random() * 100 + "%";
+
+
+            petal.style.animationDuration =
+                7 + Math.random() * 8 + "s";
+
+
+            petal.style.animationDelay =
+                Math.random() * 5 + "s";
+
+
+            petal.style.opacity =
+                0.15 +
+                Math.random() * 0.4;
+
+
+            petal.style.transform =
+                `scale(${0.5 + Math.random() * 0.8})`;
+
+
+            petals.appendChild(
+                petal
+            );
+
+
+            setTimeout(
+                () => {
+
+                    petal.remove();
+
+                },
+                16000
+            );
+
+        }
+
+
+        for (
+            let i = 0;
+            i < 14;
+            i++
+        ) {
+
+            createPetal();
+
+        }
+
+
+        setInterval(
+            createPetal,
+            1300
+        );
+
+    </script>
+
+</body>
+</html>
