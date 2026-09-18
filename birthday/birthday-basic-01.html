@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="uz" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Amina — 25th Birthday Invitation</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <!-- CSS Styles -->
+    <style>
+        :root {
+            --bg-primary: #120A10;
+            --bg-surface: #1E121B;
+            --bg-surface-glass: rgba(30, 18, 27, 0.7);
+            --accent: #D4AF37; /* Warm Champagne Gold */
+            --accent-secondary: #C25E75; /* Soft Raspberry Coral */
+            --plum: #3A1729;
+            --burgundy: #521832;
+            --text-primary: #F9F5F6;
+            --text-muted: #D0B8C4;
+            --border-color: rgba(212, 175, 55, 0.2);
+            --font-display: 'Cormorant Garamond', serif;
+            --font-editorial: 'Playfair Display', serif;
+            --font-sans: 'Outfit', sans-serif;
+            --font-script: 'Great Vibes', cursive;
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(82, 24, 50, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(58, 23, 41, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 70%);
+            background-attachment: fixed;
+        }
+
+        /* Subtle Paper Grain Overlay */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Utility Classes */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+        }
+
+        /* Floating Audio & Language Bar */
+        .top-bar {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .top-bar > * {
+            pointer-events: auto;
+        }
+
+        .control-pill {
+            background: rgba(30, 18, 27, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .control-pill:hover {
+            border-color: var(--accent);
+            background: rgba(58, 23, 41, 0.85);
+        }
+
+        .music-btn.playing .music-icon {
+            animation: pulse-music 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-music {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; color: var(--accent); }
+        }
+
+        /* Opening Overlay */
+        #opening-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-primary);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #opening-screen.fade-out {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        .opening-content {
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .opening-ornament {
+            color: var(--accent);
+            font-size: 1.5rem;
+            letter-spacing: 6px;
+            margin-bottom: -10px;
+            opacity: 0.8;
+        }
+
+        .opening-subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .opening-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 10vw, 4.5rem);
+            font-weight: 300;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin: 10px 0;
+        }
+
+        .opening-age-tag {
+            font-family: var(--font-editorial);
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .open-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--text-primary);
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        .open-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--accent);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scaleX(0);
+            transform-origin: right;
+            z-index: -1;
+        }
+
+        .open-btn:hover {
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .open-btn:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Main Wrapper */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1s ease 0.3s;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        header.hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 100px 24px 60px;
+            position: relative;
+        }
+
+        .hero-meta {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .hero-name-container {
+            position: relative;
+            margin: 30px 0;
+            width: 100%;
+        }
+
+        .huge-age {
+            font-family: var(--font-display);
+            font-size: clamp(8rem, 30vw, 16rem);
+            font-weight: 700;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.025);
+            z-index: 0;
+            pointer-events: none;
+            line-height: 1;
+            user-select: none;
+        }
+
+        .hero-name {
+            font-family: var(--font-display);
+            font-size: clamp(3.5rem, 14vw, 6.5rem);
+            font-weight: 400;
+            letter-spacing: 4px;
+            line-height: 1;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #FFF 30%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-event-badge {
+            font-family: var(--font-script);
+            font-size: 2.2rem;
+            color: var(--accent);
+            margin-top: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-details-card {
+            background: var(--bg-surface-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 420px;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .detail-item {
+            text-align: center;
+        }
+
+        .detail-item .label {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .detail-item .value {
+            font-family: var(--font-editorial);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .detail-divider {
+            width: 1px;
+            height: 30px;
+            background: var(--border-color);
+        }
+
+        /* Sections General Styling */
+        section {
+            padding: 90px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-number {
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 7vw, 3.2rem);
+            font-weight: 400;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        /* Editorial Message Section */
+        .message-section {
+            text-align: center;
+            position: relative;
+        }
+
+        .message-card {
+            background: linear-gradient(145deg, rgba(30, 18, 27, 0.6), rgba(58, 23, 41, 0.4));
+            border: 1px solid var(--border-color);
+            padding: 40px 30px;
+            border-radius: 24px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        .message-card::before {
+            content: '“';
+            font-family: var(--font-editorial);
+            font-size: 8rem;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            color: var(--accent);
+            opacity: 0.1;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .message-text {
+            font-family: var(--font-editorial);
+            font-size: clamp(1.1rem, 4vw, 1.35rem);
+            line-height: 1.8;
+            color: var(--text-primary);
+            font-style: italic;
+            margin-bottom: 25px;
+        }
+
+        .message-signature {
+            font-family: var(--font-script);
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+
+        /* Live Countdown */
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .countdown-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 20px 10px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .countdown-box:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .countdown-number {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 6vw, 2.6rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .countdown-label {
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Evening Timeline */
+        .timeline {
+            position: relative;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            bottom: 15px;
+            left: 24px;
+            width: 1px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 35px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 20px;
+            top: 4px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .timeline-time {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .timeline-title {
+            font-family: var(--font-editorial);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Venue & Dress Code Section */
+        .venue-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .venue-image-wrapper {
+            height: 220px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .venue-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.85);
+            transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .venue-card:hover .venue-image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .venue-content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .venue-name {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .venue-address {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--text-primary);
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .map-btn:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+        }
+
+        .dresscode-box {
+            margin-top: 25px;
+            background: rgba(255,255,255,0.02);
+            border: 1px dashed var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .dresscode-title {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .dresscode-desc {
+            font-family: var(--font-editorial);
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+        }
+
+        /* One Memorable Interaction: Make a Wish */
+        .wish-container {
+            background: linear-gradient(135deg, rgba(58, 23, 41, 0.5), rgba(30, 18, 27, 0.8));
+            border: 1px solid var(--accent);
+            border-radius: 28px;
+            padding: 40px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .wish-title {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .wish-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 380px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cake-stage {
+            height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            position: relative;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        .candles-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .candle {
+            width: 8px;
+            height: 35px;
+            background: linear-gradient(to bottom, #FFF, var(--accent-secondary));
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .flame {
+            width: 14px;
+            height: 22px;
+            background: radial-gradient(circle, #FFF7C0 20%, #FFA500 70%, #FF4500 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            position: absolute;
+            top: -24px;
+            left: -3px;
+            animation: flicker 0.8s infinite alternate ease-in-out;
+            box-shadow: 0 0 15px #FFA500;
+            transform-origin: bottom center;
+            transition: all 0.5s ease;
+        }
+
+        .candle.extinguished .flame {
+            transform: scale(0);
+            opacity: 0;
+            box-shadow: none;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
+            100% { transform: scale(1.1) rotate(2deg); opacity: 1; filter: brightness(1.2); }
+        }
+
+        .cake-body {
+            width: 140px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--burgundy), var(--plum));
+            border-radius: 12px 12px 6px 6px;
+            border-top: 3px solid var(--accent);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .cake-body::after {
+            content: '25';
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            letter-spacing: 2px;
+        }
+
+        .wish-action-btn {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .wish-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .wish-result {
+            font-family: var(--font-editorial);
+            font-style: italic;
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-top: 15px;
+            min-height: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .wish-result.show {
+            opacity: 1;
+        }
+
+        /* RSVP Section */
+        .rsvp-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 40px 30px;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+
+        .rsvp-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .rsvp-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .rsvp-btn {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 16px 20px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .rsvp-btn:hover {
+            border-color: var(--accent);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .rsvp-btn.selected {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .rsvp-status-msg {
+            font-family: var(--font-editorial);
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-top: 15px;
+            min-height: 30px;
+        }
+
+        /* Editorial Photo Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media(min-width: 576px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            aspect-ratio: 4/5;
+        }
+
+        .gallery-item.hero-shot {
+            grid-column: 1 / -1;
+            aspect-ratio: 16/10;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.06);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%;
+            padding: 25px 20px 20px;
+            background: linear-gradient(to top, rgba(18,10,16,0.9), transparent);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .gallery-caption span {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            text-transform: none;
+        }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(12, 6, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+
+        #lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            border: 1px solid var(--border-color);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .lightbox-close:hover { opacity: 1; color: var(--accent); }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(30, 18, 27, 0.8);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .lightbox-nav:hover { background: var(--accent); color: var(--bg-primary); }
+        .lightbox-prev { left: -60px; }
+        .lightbox-next { right: -60px; }
+
+        @media(max-width: 768px) {
+            .lightbox-prev { left: 10px; }
+            .lightbox-next { right: 10px; }
+        }
+
+        /* Guest Message Wall */
+        .wall-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            padding: 35px 25px;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent);
+            background: rgba(212, 175, 55, 0.03);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--accent);
+            color: var(--bg-primary);
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.35);
+        }
+
+        .messages-container {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 350px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .messages-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .messages-container::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .message-bubble {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--border-color);
+            padding: 16px 20px;
+            border-radius: 16px;
+            animation: fadeUp 0.5s ease;
+        }
+
+        .bubble-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.75rem;
+        }
+
+        .bubble-name {
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .bubble-time {
+            color: var(--text-muted);
+        }
+
+        .bubble-text {
+            font-family: var(--font-editorial);
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        /* Sharing & Footer Section */
+        .sharing-section {
+            text-align: center;
+            padding: 60px 0 30px;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .share-btn:hover {
+            border-color: var(--accent);
+            background: rgba(212, 175, 55, 0.05);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 24px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        .footer-name {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .footer-age {
+            font-family: var(--font-editorial);
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .footer-date {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .footer-closing {
+            font-family: var(--font-script);
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        /* Floating Confetti Particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.4;
+            animation: floatParticle 10s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.5; }
+            80% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-surface);
+            border: 1px solid var(--accent);
+            color: var(--text-primary);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 3000;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar Controls -->
+    <div class="top-bar">
+        <button class="control-pill music-btn" id="music-toggle" aria-label="Toggle music">
+            <span class="music-icon">♫</span>
+            <span id="music-label">Musiqa</span>
+        </button>
+        <button class="control-pill lang-btn" id="lang-toggle" aria-label="Switch language">
+            <span id="lang-indicator">RU</span>
+        </button>
+    </div>
+
+    <!-- Opening Screen -->
+    <div id="opening-screen">
+        <div class="opening-content">
+            <div class="opening-ornament">✦ ✦ ✦</div>
+            <p class="opening-subtitle" data-i18n="openingSubtitle">Maxsus Taklifnoma</p>
+            <h1 class="opening-title" id="opening-name-display">AMINA</h1>
+            <p class="opening-age-tag" data-i18n="openingAgeTag">25 yosh</p>
+            <button class="open-btn" id="open-invitation-btn" data-i18n="openBtn">Taklifnomani ochish</button>
+        </div>
+    </div>
+
+    <!-- Main Invitation Content -->
+    <div id="main-content">
+        
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="hero-meta" id="hero-date-meta">15 • 11 • 2026</div>
+            <div class="hero-name-container">
+                <div class="huge-age" id="hero-huge-age">25</div>
+                <h1 class="hero-name" id="hero-name">AMINA</h1>
+                <div class="hero-event-badge" data-i18n="heroBadge">Tug‘ilgan kun kechasi</div>
+            </div>
+            
+            <div class="hero-details-card">
+                <div class="detail-item">
+                    <div class="label" data-i18n="labelDate">Sana</div>
+                    <div class="value" id="card-date-val">15 Noyabr</div>
+                </div>
+                <div class="detail-divider"></div>
+                <div class="detail-item">
+                    <div class="label" data-i18n="labelTime">Vaqt</div>
+                    <div class="value" id="card-time-val">19:00</div>
+                </div>
+                <div class="detail-divider"></div>
+                <div class="detail-item">
+                    <div class="label" data-i18n="labelCity">Shahar</div>
+                    <div class="value" id="card-city-val">Toshkent</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Birthday Message Section -->
+        <section class="message-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">01 / 07</span>
+                    <h2 class="section-title" data-i18n="msgSectionTitle">Taklif</h2>
+                </div>
+                <div class="message-card">
+                    <p class="message-text" data-i18n="msgText1">
+                        "Hayotimdagi yana bir go‘zal yilni siz bilan birga nishonlashni istayman. Sizni tug‘ilgan kunimga chin qalbimdan taklif qilaman. Bu kecha yaxshi kayfiyat, samimiy suhbatlar va unutilmas lahzalarga boy bo‘lishini istayman."
+                    </p>
+                    <div class="message-signature" id="msg-signature">Amina</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Countdown Section -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">02 / 07</span>
+                    <h2 class="section-title" data-i18n="countdownTitle">Bayramgacha qoldi</h2>
+                </div>
+                <div class="countdown-grid">
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="days">00</div>
+                        <div class="countdown-label" data-i18n="cdDays">Kun</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="hours">00</div>
+                        <div class="countdown-label" data-i18n="cdHours">Soat</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="minutes">00</div>
+                        <div class="countdown-label" data-i18n="cdMinutes">Daqiqa</div>
+                    </div>
+                    <div class="countdown-box">
+                        <div class="countdown-number" id="seconds">00</div>
+                        <div class="countdown-label" data-i18n="cdSeconds">Soniya</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Evening Timeline Section -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">03 / 07</span>
+                    <h2 class="section-title" data-i18n="timelineTitle">Kecha rejasi</h2>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">18:30</div>
+                        <div class="timeline-title" data-i18n="t1Title">Mehmonlarni kutib olish</div>
+                        <div class="timeline-desc" data-i18n="t1Desc">Welcome drink va iliq uchrashuvlar</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">19:00</div>
+                        <div class="timeline-title" data-i18n="t2Title">Tantanali boshlanish</div>
+                        <div class="timeline-desc" data-i18n="t2Desc">Kechaning ochilish marosimi</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">20:00</div>
+                        <div class="timeline-title" data-i18n="t3Title">Bayramona keki</div>
+                        <div class="timeline-desc" data-i18n="t3Desc">Maxsus shirinliklar va tilaklar</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">21:30</div>
+                        <div class="timeline-title" data-i18n="t4Title">Musiqa va raqslar</div>
+                        <div class="timeline-desc" data-i18n="t4Desc">Unutilmas muhit va kayfiyat</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Venue & Dress Code Section -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">04 / 07</span>
+                    <h2 class="section-title" data-i18n="venueTitle">Manzil</h2>
+                </div>
+                <div class="venue-card">
+                    <div class="venue-image-wrapper">
+                        <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?q=80&w=1000&auto=format&fit=crop" alt="Sky Lounge Venue">
+                    </div>
+                    <div class="venue-content">
+                        <h3 class="venue-name" id="venue-name-val">Sky Lounge</h3>
+                        <p class="venue-address" id="venue-address-val">Tashkent, Uzbekistan</p>
+                        <a href="#" id="map-link-btn" class="map-btn" target="_blank" rel="noopener">
+                            📍 <span data-i18n="mapBtnText">Xaritada ochish</span>
+                        </a>
+
+                        <div class="dresscode-box">
+                            <div class="dresscode-title" data-i18n="dressCodeTitle">Dress Code</div>
+                            <div class="dresscode-desc" data-i18n="dressCodeDesc">Smart casual · A touch of burgundy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- One Memorable Interaction: Make a Wish -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">05 / 07</span>
+                    <h2 class="section-title" data-i18n="wishTitle">Tilak bildiring</h2>
+                </div>
+                <div class="wish-container">
+                    <h3 class="wish-title" data-i18n="cakeBoxTitle">Shamlarni o‘chiring</h3>
+                    <p class="wish-desc" data-i18n="cakeBoxDesc">Shamlarga teging yoki tugmani bosing</p>
+                    
+                    <div class="cake-stage" id="cake-stage" role="button" aria-label="Blow out candles">
+                        <div class="candles-row">
+                            <div class="candle"><div class="flame"></div></div>
+                            <div class="candle"><div class="flame"></div></div>
+                            <div class="candle"><div class="flame"></div></div>
+                        </div>
+                        <div class="cake-body"></div>
+                    </div>
+
+                    <button class="wish-action-btn" id="blow-candles-btn" data-i18n="blowBtn">Shamni o‘chirish ✦</button>
+                    <div class="wish-result" id="wish-result-msg">"Tilagingiz amalga oshsin!"</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">06 / 07</span>
+                    <h2 class="section-title" data-i18n="rsvpTitle">Ishtirokingiz</h2>
+                </div>
+                <div class="rsvp-card">
+                    <p class="rsvp-desc" data-i18n="rsvpDesc">Kelishingizni oldindan tasdiqlab qo‘ysangiz, bayramni yanada chiroyli rejalashtira olaman.</p>
+                    
+                    <div class="rsvp-buttons">
+                        <button class="rsvp-btn" data-response="yes">
+                            <span>✓</span> <span data-i18n="rsvpYes">Albatta kelaman</span>
+                        </button>
+                        <button class="rsvp-btn" data-response="maybe">
+                            <span>?</span> <span data-i18n="rsvpMaybe">Hali aniq emas</span>
+                        </button>
+                        <button class="rsvp-btn" data-response="no">
+                            <span>✕</span> <span data-i18n="rsvpNo">Afsuski, kela olmayman</span>
+                        </button>
+                    </div>
+
+                    <div class="rsvp-status-msg" id="rsvp-status"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Editorial Photo Gallery -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">07 / 07</span>
+                    <h2 class="section-title" data-i18n="galleryTitle">Lahzalar</h2>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item hero-shot" data-index="0">
+                        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1200&auto=format&fit=crop" alt="Gallery 1" loading="lazy">
+                        <div class="gallery-caption">
+                            <span>Unforgettable</span> 2026
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-index="1">
+                        <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?q=80&w=800&auto=format&fit=crop" alt="Gallery 2" loading="lazy">
+                        <div class="gallery-caption">
+                            <span>Atmosphere</span> Sky Lounge
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-index="2">
+                        <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" alt="Gallery 3" loading="lazy">
+                        <div class="gallery-caption">
+                            <span>Celebration</span> Tashkent
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guest Message Wall -->
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-number">✦</span>
+                    <h2 class="section-title" data-i18n="wallTitle">Tilak qoldiring</h2>
+                </div>
+                <div class="wall-card">
+                    <form id="message-form">
+                        <div class="form-group">
+                            <input type="text" class="form-input" id="guest-name" placeholder="Ismingiz" required data-i18n-placeholder="namePlaceholder">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-input" id="guest-message" placeholder="Tug‘ilgan kunga tilaklaringiz..." required data-i18n-placeholder="msgPlaceholder"></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" data-i18n="submitBtn">Tilak qoldirish</button>
+                    </form>
+
+                    <div class="messages-container" id="messages-list">
+                        <!-- Dynamic messages injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sharing Section -->
+        <section class="sharing-section">
+            <div class="container">
+                <p style="font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted);" data-i18n="shareTitle">Taklifnomani ulashing</p>
+                <div class="share-buttons">
+                    <button class="share-btn" id="share-telegram">
+                        ✈ Telegram
+                    </button>
+                    <button class="share-btn" id="share-whatsapp">
+                        💬 WhatsApp
+                    </button>
+                    <button class="share-btn" id="share-copy">
+                        🔗 <span data-i18n="shareCopy">Nusxalash</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-name" id="footer-name">Amina</div>
+                <div class="footer-age" id="footer-age">25th Birthday</div>
+                <div class="footer-date" id="footer-date">15 November 2026</div>
+                <div class="footer-closing" data-i18n="footerClosing">Ko‘rishguncha!</div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close">&times;</button>
+            <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&#10094;</button>
+            <img id="lightbox-img" src="" alt="Enlarged Photo">
+            <button class="lightbox-nav lightbox-next" id="lightbox-next">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast">Nusxalandi!</div>
+
+    <!-- Audio Element (Placeholder) -->
+    <audio id="bg-audio" loop preload="auto">
+        <source src="" type="audio/mp3">
+    </audio>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        /* ==========================================================
+           1. CONFIGURATION
+           ========================================================== */
+        const INVITATION = {
+            celebrant: "Amina",
+            age: 25,
+            date: "2026-11-15T19:00:00",
+            displayDateUZ: "15 Noyabr 2026",
+            displayDateRU: "15 Ноября 2026",
+            time: "19:00",
+            venue: "Sky Lounge",
+            city: "Tashkent, Uzbekistan",
+            mapUrl: "https://www.google.com/maps/search/?api=1&query=Sky+Lounge+Tashkent",
+            musicUrl: "", // Optional MP3 URL
+            theme: {
+                accent: "#D4AF37",
+                background: "#120A10"
+            }
+        };
+
+        /* ==========================================================
+           2. TRANSLATIONS SYSTEM (UZ / RU)
+           ========================================================== */
+        const TRANSLATIONS = {
+            uz: {
+                openingSubtitle: "Maxsus Taklifnoma",
+                openAgeTag: "25 yosh",
+                openBtn: "Taklifnomani ochish",
+                heroBadge: "Tug‘ilgan kun kechasi",
+                labelDate: "Sana",
+                labelTime: "Vaqt",
+                labelCity: "Shahar",
+                msgSectionTitle: "Taklif",
+                msgText1: "Hayotimdagi yana bir go‘zal yilni siz bilan birga nishonlashni istayman. Sizni tug‘ilgan kunimga chin qalbimdan taklif qilaman. Bu kecha yaxshi kayfiyat, samimiy suhbatlar va unutilmas lahzalarga boy bo‘lishini istayman.",
+                countdownTitle: "Bayramgacha qoldi",
+                cdDays: "Kun",
+                cdHours: "Soat",
+                cdMinutes: "Daqiqa",
+                cdSeconds: "Soniya",
+                timelineTitle: "Kechish rejasi",
+                t1Title: "Mehmonlarni kutib olish",
+                t1Desc: "Welcome drink va iliq uchrashuvlar",
+                t2Title: "Tantanali boshlanish",
+                t2Desc: "Kechaning ochilish marosimi",
+                t3Title: "Bayramona keki",
+                t3Desc: "Maxsus shirinliklar va tilaklar",
+                t4Title: "Musiqa va raqslar",
+                t4Desc: "Unutilmas muhit va kayfiyat",
+                venueTitle: "Manzil",
+                mapBtnText: "Xaritada ochish",
+                dressCodeTitle: "Dress Code",
+                dressCodeDesc: "Smart casual · A touch of burgundy",
+                wishTitle: "Tilak bildiring",
+                cakeBoxTitle: "Shamlarni o‘chiring",
+                cakeBoxDesc: "Shamlarga teging yoki tugmani bosing",
+                blowBtn: "Shamni o‘chirish ✦",
+                wishResult: "“Tilagingiz amalga oshsin!”",
+                rsvpTitle: "Ishtirokingiz",
+                rsvpDesc: "Kelishingizni oldindan tasdiqlab qo‘ysangiz, bayramni yanada chiroyli rejalashtira olaman.",
+                rsvpYes: "Albatta kelaman",
+                rsvpMaybe: "Hali aniq emas",
+                rsvpNo: "Afsuski, kela olmayman",
+                galleryTitle: "Lahzalar",
+                wallTitle: "Tilak qoldiring",
+                namePlaceholder: "Ismingiz",
+                msgPlaceholder: "Tug‘ilgan kunga tilaklaringiz...",
+                submitBtn: "Tilak qoldirish",
+                shareTitle: "Taklifnomani ulashing",
+                shareCopy: "Nusxalash",
+                footerClosing: "Ko‘rishguncha!",
+                musicLabel: "Musiqa",
+                toastCopied: "Nusxalandi!"
+            },
+            ru: {
+                openingSubtitle: "Официальное Приглашение",
+                openAgeTag: "25 лет",
+                openBtn: "Открыть приглашение",
+                heroBadge: "Вечер по случаю дня рождения",
+                labelDate: "Дата",
+                labelTime: "Время",
+                labelCity: "Город",
+                msgSectionTitle: "Приглашение",
+                msgText1: "Я хочу разделить еще один прекрасный год моей жизни с вами. От всего сердца приглашаю вас на свой день рождения. Пусть этот вечер будет наполнен прекрасным настроением, теплыми беседами и незабываемыми моментами.",
+                countdownTitle: "До праздника осталось",
+                cdDays: "Дней",
+                cdHours: "Часов",
+                cdMinutes: "Минут",
+                cdSeconds: "Секунд",
+                timelineTitle: "Программа вечера",
+                t1Title: "Сбор гостей",
+                t1Desc: "Welcome drink и теплые встречи",
+                t2Title: "Начало вечера",
+                t2Desc: "Официальное открытие праздника",
+                t3Title: "Праздничный торт",
+                t3Desc: "Специальные сладости и загадывание желаний",
+                t4Title: "Музыка и танцы",
+                t4Desc: "Незабываемая атмосфера и настроение",
+                venueTitle: "Локация",
+                mapBtnText: "Открыть на карте",
+                dressCodeTitle: "Дресс-код",
+                dressCodeDesc: "Smart casual · С оттенками бордового",
+                wishTitle: "Загадать желание",
+                cakeBoxTitle: "Задуйте свечи",
+                cakeBoxDesc: "Нажмите на свечи или кнопку ниже",
+                blowBtn: "Задуть свечу ✦",
+                wishResult: "“Пусть ваше желание обязательно исполнится!”",
+                rsvpTitle: "Ваше присутствие",
+                rsvpDesc: "Пожалуйста, подтвердите ваше присутствие заранее, чтобы мы могли идеально организовать вечер.",
+                rsvpYes: "Обязательно буду",
+                rsvpMaybe: "Ещё не уверен(-а)",
+                rsvpNo: "К сожалению, не смогу",
+                galleryTitle: "Моменты",
+                wallTitle: "Книга пожеланий",
+                namePlaceholder: "Ваше имя",
+                msgPlaceholder: "Ваши поздравления и пожелания...",
+                submitBtn: "Отправить пожелание",
+                shareTitle: "Поделиться приглашением",
+                shareCopy: "Копировать",
+                footerClosing: "До встречи!",
+                musicLabel: "Музыка",
+                toastCopied: "Скопировано в буфер обмена!"
+            }
+        };
+
+        let currentLang = localStorage.getItem('amina_invite_lang') || 'uz';
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('amina_invite_lang', lang);
+            document.getElementById('lang-indicator').textContent = lang === 'uz' ? 'RU' : 'UZ';
+            document.documentElement.setAttribute('lang', lang);
+
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (TRANSLATIONS[lang][key]) {
+                    el.textContent = TRANSLATIONS[lang][key];
+                }
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (TRANSLATIONS[lang][key]) {
+                    el.placeholder = TRANSLATIONS[lang][key];
+                }
+            });
+
+            // Update Dynamic Dates
+            document.getElementById('card-date-val').textContent = lang === 'uz' ? INVITATION.displayDateUZ : INVITATION.displayDateRU;
+            document.getElementById('footer-date').textContent = lang === 'uz' ? INVITATION.displayDateUZ : INVITATION.displayDateRU;
+        }
+
+        document.getElementById('lang-toggle').addEventListener('click', () => {
+            updateLanguage(currentLang === 'uz' ? 'ru' : 'uz');
+        });
+
+        /* ==========================================================
+           3. INITIALIZATION & DATA BINDING
+           ========================================================== */
+        document.getElementById('opening-name-display').textContent = INVITATION.celebrant.toUpperCase();
+        document.getElementById('hero-name').textContent = INVITATION.celebrant.toUpperCase();
+        document.getElementById('hero-huge-age').textContent = INVITATION.age;
+        document.getElementById('msg-signature').textContent = INVITATION.celebrant;
+        document.getElementById('venue-name-val').textContent = INVITATION.venue;
+        document.getElementById('venue-address-val').textContent = INVITATION.city;
+        document.getElementById('map-link-btn').href = INVITATION.mapUrl;
+        document.getElementById('footer-name').textContent = INVITATION.celebrant;
+        document.getElementById('footer-age').textContent = `${INVITATION.age}th Birthday`;
+
+        updateLanguage(currentLang);
+
+        /* ==========================================================
+           4. OPENING EXPERIENCE ANIMATION
+           ========================================================== */
+        const openingScreen = document.getElementById('opening-screen');
+        const mainContent = document.getElementById('main-content');
+        const bgAudio = document.getElementById('bg-audio');
+        const musicToggleBtn = document.getElementById('music-toggle');
+        let isMusicPlaying = false;
+
+        document.getElementById('open-invitation-btn').addEventListener('click', () => {
+            openingScreen.classList.add('fade-out');
+            mainContent.classList.add('visible');
+            setTimeout(() => {
+                openingScreen.style.display = 'none';
+            }, 800);
+
+            // Attempt playing audio if URL provided
+            if (INVITATION.musicUrl) {
+                bgAudio.src = INVITATION.musicUrl;
+                bgAudio.play().then(() => {
+                    isMusicPlaying = true;
+                    musicToggleBtn.classList.add('playing');
+                }).catch(() => {
+                    // Browser policy block handled silently
+                });
+            }
+        });
+
+        /* ==========================================================
+           5. MUSIC TOGGLE
+           ========================================================== */
+        musicToggleBtn.addEventListener('click', () => {
+            if (!INVITATION.musicUrl) {
+                showToast(currentLang === 'uz' ? "Musiqa fayli kiritilmagan" : "Аудиофайл не указан");
+                return;
+            }
+            if (isMusicPlaying) {
+                bgAudio.pause();
+                isMusicPlaying = false;
+                musicToggleBtn.classList.remove('playing');
+            } else {
+                bgAudio.play();
+                isMusicPlaying = true;
+                musicToggleBtn.classList.add('playing');
+            }
+        });
+
+        /* ==========================================================
+           6. LIVE COUNTDOWN TIMER
+           ========================================================== */
+        const eventDate = new Date(INVITATION.date).getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance < 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        /* ==========================================================
+           7. ONE MEMORABLE INTERACTION: MAKE A WISH (CANDLE BLOWING)
+           ========================================================== */
+        const cakeStage = document.getElementById('cake-stage');
+        const blowBtn = document.getElementById('blow-candles-btn');
+        const candles = document.querySelectorAll('.candle');
+        const wishResultMsg = document.getElementById('wish-result-msg');
+        let candlesExtinguished = false;
+
+        function blowOutCandles() {
+            if (candlesExtinguished) return;
+            candlesExtinguished = true;
+            candles.forEach(c => c.classList.add('extinguished'));
+            wishResultMsg.textContent = TRANSLATIONS[currentLang].wishResult;
+            wishResultMsg.classList.add('show');
+            blowBtn.style.opacity = '0.5';
+            blowBtn.style.pointerEvents = 'none';
+
+            // Create magical micro-confetti burst
+            createMiniConfetti();
+        }
+
+        cakeStage.addEventListener('click', blowOutCandles);
+        blowBtn.addEventListener('click', blowOutCandles);
+
+        /* ==========================================================
+           8. RSVP SYSTEM (LOCALSTORAGE)
+           ========================================================== */
+        const rsvpButtons = document.querySelectorAll('.rsvp-btn');
+        const rsvpStatus = document.getElementById('rsvp-status');
+        const savedRsvp = localStorage.getItem('amina_invite_rsvp');
+
+        if (savedRsvp) {
+            rsvpButtons.forEach(btn => {
+                if (btn.getAttribute('data-response') === savedRsvp) {
+                    btn.classList.add('selected');
+                }
+            });
+            updateRsvpStatusText(savedRsvp);
+        }
+
+        rsvpButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                rsvpButtons.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                const response = btn.getAttribute('data-response');
+                localStorage.setItem('amina_invite_rsvp', response);
+                updateRsvpStatusText(response);
+                showToast(currentLang === 'uz' ? "Javobingiz saqlandi!" : "Ответ сохранен!");
+            });
+        });
+
+        function updateRsvpStatusText(resp) {
+            const texts = {
+                uz: { yes: "✓ Tashrifingiz tasdiqlandi. Kutamiz!", maybe: "? Javobingiz qabul qilindi.", no: "✕ Tashakkur, fikringiz inobatga olindi." },
+                ru: { yes: "✓ Ваше присутствие подтверждено. Ждем!", maybe: "? Ваш ответ принят.", no: "✕ Спасибо, ваш ответ учтен." }
+            };
+            rsvpStatus.textContent = texts[currentLang][resp] || "";
+        }
+
+        /* ==========================================================
+           9. PHOTO GALLERY & LIGHTBOX
+           ========================================================== */
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+
+        const images = Array.from(galleryItems).map(item => item.querySelector('img').src);
+        let currentImageIndex = 0;
+
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentImageIndex = index;
+                openLightbox(images[currentImageIndex]);
+            });
+        });
+
+        function openLightbox(src) {
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        lightboxPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            lightboxImg.src = images[currentImageIndex];
+        });
+
+        lightboxNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            lightboxImg.src = images[currentImageIndex];
+        });
+
+        // Keyboard navigation for Lightbox
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') lightboxPrev.click();
+            if (e.key === 'ArrowRight') lightboxNext.click();
+        });
+
+        /* ==========================================================
+           10. GUEST MESSAGE WALL (LOCALSTORAGE)
+           ========================================================== */
+        const messageForm = document.getElementById('message-form');
+        const messagesList = document.getElementById('messages-list');
+
+        let savedMessages = JSON.parse(localStorage.getItem('amina_invite_messages')) || [
+            { name: "Timur", text: "Amina, tug‘ilgan kuning muborak! Doimo shunday nurli va quvnoq bo‘lib yurgin!", time: "Bugun" },
+            { name: "Madina", text: "Sizga baxt va cheksiz muvaffaqiyatlar tilayman! Kechani intiqlik bilan kutyapman ✨", time: "Kecha" }
+        ];
+
+        function renderMessages() {
+            messagesList.innerHTML = '';
+            savedMessages.forEach(msg => {
+                const bubble = document.createElement('div');
+                bubble.className = 'message-bubble';
+                bubble.innerHTML = `
+                    <div class="bubble-header">
+                        <span class="bubble-name">${escapeHtml(msg.name)}</span>
+                        <span class="bubble-time">${escapeHtml(msg.time)}</span>
+                    </div>
+                    <div class="bubble-text">${escapeHtml(msg.text)}</div>
+                `;
+                messagesList.appendChild(bubble);
+            });
+        }
+
+        messageForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById('guest-name');
+            const msgInput = document.getElementById('guest-message');
+
+            const newMsg = {
+                name: nameInput.value.trim(),
+                text: msgInput.value.trim(),
+                time: currentLang === 'uz' ? "Hozirgina" : "Только что"
+            };
+
+            if (!newMsg.name || !newMsg.text) return;
+
+            savedMessages.unshift(newMsg);
+            localStorage.setItem('amina_invite_messages', JSON.stringify(savedMessages));
+            renderMessages();
+
+            nameInput.value = '';
+            msgInput.value = '';
+            showToast(currentLang === 'uz' ? "Tilagingiz qabul qilindi!" : "Пожелание отправлено!");
+        });
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        renderMessages();
+
+        /* ==========================================================
+           11. SHARING SYSTEM
+           ========================================================== */
+        const shareText = "AMINA sizni 25 yoshini nishonlashga taklif qiladi. 15 noyabr, 19:00. Sky Lounge, Toshkent.";
+        const shareUrl = window.location.href;
+
+        document.getElementById('share-telegram').addEventListener('click', () => {
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`, '_blank');
+        });
+
+        document.getElementById('share-whatsapp').addEventListener('click', () => {
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`, '_blank');
+        });
+
+        document.getElementById('share-copy').addEventListener('click', () => {
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                showToast(TRANSLATIONS[currentLang].toastCopied);
+            }).catch(() => {
+                // Fallback
+                const textarea = document.createElement('textarea');
+                textarea.value = shareUrl;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast(TRANSLATIONS[currentLang].toastCopied);
+            });
+        });
+
+        /* ==========================================================
+           12. TOAST NOTIFICATION UTILITY
+           ========================================================== */
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        /* ==========================================================
+           13. SUBTLE PARTICLES & ANIMATION EFFECTS
+           ========================================================== */
+        function createMiniConfetti() {
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 50 + 50 + 'vh';
+                particle.style.width = Math.random() * 8 + 4 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = Math.random() > 0.5 ? '#D4AF37' : '#C25E75';
+                particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 5000);
+            }
+        }
+    </script>
+</body>
+</html>
