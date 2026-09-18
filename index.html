@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" data-lang="en">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>E·INV — Digital Invitation Studio</title>
+    <title>E·INV</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500&display=swap"
         rel="stylesheet"
     >
 
@@ -19,275 +18,36 @@
 
 <body>
 
-    <!-- Header -->
-    <header>
-        <a href="#" class="brand-container">
-            <span class="brand-logo">E·INV</span>
-            <span class="brand-subtitle" data-i18n="brandSubtitle">
-                Digital Invitations
-            </span>
-        </a>
+<header>
+    <a href="index.html" class="logo">E·INV</a>
 
-        <div class="nav-right">
-
-            <ul class="nav-links">
-                <li>
-                    <a
-                        href="#collection"
-                        data-i18n="navWeddings"
-                        onclick="filterByCategory('wedding', event)"
-                    >
-                        Weddings
-                    </a>
-                </li>
-
-                <li>
-                    <a
-                        href="#collection"
-                        data-i18n="navBirthdays"
-                        onclick="filterByCategory('birthday', event)"
-                    >
-                        Birthdays
-                    </a>
-                </li>
-
-                <li>
-                    <a
-                        href="#collection"
-                        data-i18n="navAll"
-                        onclick="filterByCategory('all', event)"
-                        class="active"
-                    >
-                        All Templates
-                    </a>
-                </li>
-            </ul>
-
-            <div class="lang-switcher">
-                <button
-                    class="lang-btn active"
-                    onclick="switchLanguage('en')"
-                >
-                    EN
-                </button>
-
-                <button
-                    class="lang-btn"
-                    onclick="switchLanguage('ru')"
-                >
-                    RU
-                </button>
-
-                <button
-                    class="lang-btn"
-                    onclick="switchLanguage('uz')"
-                >
-                    UZ
-                </button>
-            </div>
-
-        </div>
-    </header>
+    <div class="languages">
+        <button data-lang="en">EN</button>
+        <button data-lang="ru">RU</button>
+        <button data-lang="uz">UZ</button>
+    </div>
+</header>
 
 
-    <!-- Main Content -->
-    <main>
+<main>
 
-        <!-- Hero -->
-        <section class="hero">
+    <section>
+        <h2 data-i18n="weddings">Weddings</h2>
 
-            <span
-                class="hero-eyebrow"
-                data-i18n="heroEyebrow"
-            >
-                The Invitation Collection
-            </span>
-
-            <h1
-                class="hero-title"
-                data-i18n="heroTitle"
-            >
-                Moments worth remembering, beautifully invited.
-            </h1>
-
-            <p
-                class="hero-desc"
-                data-i18n="heroDesc"
-            >
-                A curated collection of digital invitations designed
-                for weddings, birthdays, and life's most meaningful
-                celebrations.
-            </p>
-
-            <div class="hero-ornament">
-                ♦ &nbsp; ✧ &nbsp; ♦
-            </div>
-
-        </section>
+        <div class="links" id="wedding-links"></div>
+    </section>
 
 
-        <!-- Statistics -->
-        <div
-            class="stats-row"
-            id="statsRow"
-        ></div>
+    <section>
+        <h2 data-i18n="birthdays">Birthdays</h2>
+
+        <div class="links" id="birthday-links"></div>
+    </section>
+
+</main>
 
 
-        <!-- Collection Controls -->
-        <div
-            class="controls-bar"
-            id="collection"
-        >
-
-            <div class="category-filters">
-
-                <button
-                    class="filter-btn active"
-                    data-filter="all"
-                    onclick="filterByCategory('all')"
-                    data-i18n="filterAll"
-                >
-                    All
-                </button>
-
-                <button
-                    class="filter-btn"
-                    data-filter="wedding"
-                    onclick="filterByCategory('wedding')"
-                    data-i18n="filterWedding"
-                >
-                    Wedding
-                </button>
-
-                <button
-                    class="filter-btn"
-                    data-filter="birthday"
-                    onclick="filterByCategory('birthday')"
-                    data-i18n="filterBirthday"
-                >
-                    Birthday
-                </button>
-
-            </div>
-
-
-            <div class="search-sort-group">
-
-                <div class="search-box">
-
-                    <span class="search-icon">
-                        🔍
-                    </span>
-
-                    <input
-                        type="text"
-                        class="search-input"
-                        id="searchInput"
-                        placeholder="Search collection..."
-                        data-i18n-placeholder="searchPlaceholder"
-                        oninput="handleSearch()"
-                    >
-
-                </div>
-
-
-                <select
-                    class="sort-select"
-                    id="sortSelect"
-                    onchange="handleSort()"
-                >
-                    <option
-                        value="newest"
-                        data-i18n="sortNewest"
-                    >
-                        Newest
-                    </option>
-
-                    <option
-                        value="name"
-                        data-i18n="sortName"
-                    >
-                        Name
-                    </option>
-
-                    <option
-                        value="tier"
-                        data-i18n="sortTier"
-                    >
-                        Tier
-                    </option>
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <!-- Template Grid -->
-        <div
-            class="template-grid"
-            id="templateGrid"
-        >
-
-            <!-- Empty State -->
-            <div
-                class="empty-state"
-                id="emptyState"
-            >
-
-                <div class="empty-icon">
-                    ✧ &nbsp; ✦ &nbsp; ✧
-                </div>
-
-                <h3
-                    class="empty-title"
-                    data-i18n="emptyTitle"
-                >
-                    Coming Soon
-                </h3>
-
-                <p
-                    class="empty-desc"
-                    data-i18n="emptyDesc"
-                >
-                    Invitations for this category are currently being
-                    crafted for the collection. More beautiful moments
-                    are on the way.
-                </p>
-
-            </div>
-
-        </div>
-
-    </main>
-
-
-    <!-- Footer -->
-    <footer>
-
-        <div class="footer-brand">
-            E·INV
-        </div>
-
-        <div
-            class="footer-tagline"
-            data-i18n="footerTagline"
-        >
-            Digital invitations for meaningful moments.
-        </div>
-
-        <div class="footer-ornament">
-            ♦
-        </div>
-
-        <div class="footer-copy">
-            &copy; 2026 E·INV. All rights reserved.
-        </div>
-
-    </footer>
-
-
-    <script src="js/app.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
