@@ -3,1100 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>E·INV — Digital Invitation Studio</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --color-bg: #121110;
-            --color-surface: #1a1817;
-            --color-surface-hover: #23211f;
-            --color-border: #332f2c;
-            --color-border-light: #443e3a;
-            --color-gold: #c5a880;
-            --color-gold-light: #dfc8a5;
-            --color-ivory: #f9f6f0;
-            --color-text: #e8e4dc;
-            --color-text-muted: #9e978e;
-            --color-burgundy: #4a2328;
-            
-            --font-serif: 'Cormorant Garamond', Georgia, serif;
-            --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-            
-            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600&display=swap"
+        rel="stylesheet"
+    >
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--color-bg);
-            color: var(--color-text);
-            font-family: var(--font-sans);
-            font-size: 15px;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Subtle Noise Overlay */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 999;
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(18, 17, 16, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--color-border);
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 4%;
-            transition: var(--transition-smooth);
-        }
-
-        .brand-container {
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-        }
-
-        .brand-logo {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-            letter-spacing: 0.25em;
-            color: var(--color-ivory);
-            font-weight: 500;
-        }
-
-        .brand-subtitle {
-            font-size: 0.65rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--color-gold);
-            margin-top: -2px;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 2.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--color-text-muted);
-            text-decoration: none;
-            font-size: 0.8rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--color-ivory);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background-color: var(--color-gold);
-            transition: var(--transition-smooth);
-        }
-
-        .nav-links a:hover::after, .nav-links a.active::after {
-            width: 100%;
-        }
-
-        /* Language Switcher */
-        .lang-switcher {
-            display: flex;
-            border: 1px solid var(--color-border);
-            border-radius: 2px;
-            overflow: hidden;
-            background: var(--color-surface);
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: var(--color-text-muted);
-            font-family: var(--font-sans);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            padding: 0.35rem 0.6rem;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .lang-btn:hover {
-            color: var(--color-ivory);
-        }
-
-        .lang-btn.active {
-            background: var(--color-gold);
-            color: var(--color-bg);
-            font-weight: 600;
-        }
-
-        /* Main Container */
-        main {
-            margin-top: 100px;
-            flex: 1;
-            padding: 0 4% 6rem 4%;
-            max-width: 1600px;
-            margin-left: auto;
-            margin-right: auto;
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 5rem 0 3rem 0;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .hero-eyebrow {
-            font-size: 0.75rem;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            color: var(--color-gold);
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            position: relative;
-        }
-
-        .hero-eyebrow::before, .hero-eyebrow::after {
-            content: "—";
-            color: var(--color-border-light);
-            margin: 0 1rem;
-        }
-
-        .hero-title {
-            font-family: var(--font-serif);
-            font-size: clamp(2.5rem);
-            font-size: clamp(2.5rem, 5vw, 4.2rem);
-            font-weight: 300;
-            color: var(--color-ivory);
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.01em;
-        }
-
-        .hero-desc {
-            color: var(--color-text-muted);
-            font-size: 1.05rem;
-            font-weight: 300;
-            line-height: 1.7;
-            max-width: 600px;
-            margin: 0 auto 2.5rem auto;
-        }
-
-        .hero-ornament {
-            color: var(--color-gold);
-            font-size: 1.2rem;
-            letter-spacing: 0.5em;
-            opacity: 0.6;
-            margin-bottom: 2rem;
-        }
-
-        /* Stats Row */
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 4rem;
-            border-top: 1px solid var(--color-border);
-            border-bottom: 1px solid var(--color-border);
-            padding: 1.5rem 0;
-            margin: 3rem 0;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-family: var(--font-serif);
-            font-size: 1.6rem;
-            color: var(--color-gold);
-            font-weight: 400;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--color-text-muted);
-            margin-top: 0.2rem;
-        }
-
-        /* Controls Bar (Filter, Search, Sort) */
-        .controls-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 3rem 0 2rem 0;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .category-filters {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            background: transparent;
-            border: 1px solid var(--color-border);
-            color: var(--color-text-muted);
-            padding: 0.5rem 1.25rem;
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            border-radius: 2px;
-        }
-
-        .filter-btn:hover {
-            border-color: var(--color-border-light);
-            color: var(--color-ivory);
-        }
-
-        .filter-btn.active {
-            background-color: var(--color-surface-hover);
-            border-color: var(--color-gold);
-            color: var(--color-ivory);
-        }
-
-        .search-sort-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .search-box {
-            position: relative;
-        }
-
-        .search-input {
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            padding: 0.5rem 1rem 0.5rem 2.2rem;
-            color: var(--color-ivory);
-            font-family: var(--font-sans);
-            font-size: 0.8rem;
-            width: 220px;
-            border-radius: 2px;
-            transition: var(--transition-smooth);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--color-gold);
-            width: 260px;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--color-text-muted);
-            font-size: 0.8rem;
-            pointer-events: none;
-        }
-
-        .sort-select {
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            color: var(--color-text-muted);
-            padding: 0.5rem 1rem;
-            font-family: var(--font-sans);
-            font-size: 0.8rem;
-            border-radius: 2px;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-        }
-
-        .sort-select:focus, .sort-select:hover {
-            outline: none;
-            border-color: var(--color-gold);
-            color: var(--color-ivory);
-        }
-
-        /* Template Grid */
-        .template-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 2.5rem;
-        }
-
-        /* Template Card */
-        .template-card {
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: 4px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition-smooth);
-            position: relative;
-        }
-
-        .template-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--color-border-light);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Mini Preview Box */
-        .card-preview-container {
-            height: 260px;
-            background: linear-gradient(135deg, #181615 0%, #201c1a 100%);
-            border-bottom: 1px solid var(--color-border);
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            padding: 2rem;
-        }
-
-        .card-preview-container::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(197, 168, 128, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        /* Miniature Invitation Styling (CSS Art) */
-        .mini-invitation {
-            width: 170px;
-            height: 220px;
-            background-color: #fbf9f5;
-            color: #2b2622;
-            padding: 1.25rem 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid rgba(197, 168, 128, 0.4);
-            transition: var(--transition-smooth);
-        }
-
-        .template-card:hover .mini-invitation {
-            transform: scale(1.03);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 15px rgba(197, 168, 128, 0.15);
-        }
-
-        .mini-inv-border {
-            position: absolute;
-            inset: 6px;
-            border: 1px solid rgba(197, 168, 128, 0.5);
-            pointer-events: none;
-        }
-
-        .mini-inv-top {
-            font-family: var(--font-serif);
-            font-size: 0.5rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: #7a6d5d;
-        }
-
-        .mini-inv-body {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-        }
-
-        .mini-inv-names {
-            font-family: var(--font-serif);
-            font-size: 0.95rem;
-            font-style: italic;
-            color: #1a1715;
-            line-height: 1.1;
-        }
-
-        .mini-inv-amp {
-            font-size: 0.75rem;
-            color: #b08d57;
-            font-family: var(--font-serif);
-        }
-
-        .mini-inv-date {
-            font-size: 0.5rem;
-            letter-spacing: 0.15em;
-            color: #5c5348;
-            text-transform: uppercase;
-        }
-
-        .mini-inv-footer {
-            font-size: 0.45rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: #8c8070;
-        }
-
-        .card-number-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1.25rem;
-            font-family: var(--font-serif);
-            font-size: 0.85rem;
-            color: var(--color-gold);
-            opacity: 0.8;
-        }
-
-        /* Card Meta and Content */
-        .card-content {
-            padding: 1.75rem;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .card-meta-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .card-category-tier {
-            font-size: 0.65rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--color-gold);
-        }
-
-        .card-status {
-            font-size: 0.6rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            padding: 0.2rem 0.5rem;
-            border-radius: 2px;
-            background: rgba(197, 168, 128, 0.1);
-            color: var(--color-gold);
-            border: 1px solid rgba(197, 168, 128, 0.2);
-        }
-
-        .card-title {
-            font-family: var(--font-serif);
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: var(--color-ivory);
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.01em;
-        }
-
-        .card-desc {
-            font-size: 0.85rem;
-            color: var(--color-text-muted);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            flex: 1;
-            font-weight: 300;
-        }
-
-        .card-action-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .preview-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--color-ivory);
-            text-decoration: none;
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            font-weight: 500;
-            transition: var(--transition-smooth);
-        }
-
-        .preview-link span {
-            transition: transform 0.3s ease;
-        }
-
-        .preview-link:hover {
-            color: var(--color-gold);
-        }
-
-        .preview-link:hover span {
-            transform: translateX(4px);
-        }
-
-        /* Empty State */
-        .empty-state {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 6rem 2rem;
-            background-color: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: 4px;
-            display: none;
-        }
-
-        .empty-state.visible {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .empty-icon {
-            color: var(--color-gold);
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            opacity: 0.7;
-            letter-spacing: 0.3em;
-        }
-
-        .empty-title {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            color: var(--color-ivory);
-            font-weight: 300;
-            margin-bottom: 1rem;
-            letter-spacing: 0.05em;
-        }
-
-        .empty-desc {
-            color: var(--color-text-muted);
-            font-size: 0.95rem;
-            max-width: 400px;
-            margin: 0 auto;
-            line-height: 1.7;
-            font-weight: 300;
-        }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--color-border);
-            padding: 3rem 4%;
-            text-align: center;
-            background-color: rgba(18, 17, 16, 0.9);
-            margin-top: 6rem;
-        }
-
-        .footer-brand {
-            font-family: var(--font-serif);
-            font-size: 1.25rem;
-            letter-spacing: 0.3em;
-            color: var(--color-ivory);
-            margin-bottom: 0.75rem;
-        }
-
-        .footer-tagline {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            letter-spacing: 0.1em;
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-        }
-
-        .footer-ornament {
-            color: var(--color-gold);
-            font-size: 0.9rem;
-            letter-spacing: 0.4em;
-            margin-bottom: 1.5rem;
-            opacity: 0.5;
-        }
-
-        .footer-copy {
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            color: var(--color-text-muted);
-            text-transform: uppercase;
-        }
-
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem 5%;
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .nav-right {
-                width: 100%;
-                justify-content: space-between;
-                gap: 1rem;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .nav-links a {
-                font-size: 0.7rem;
-            }
-
-            main {
-                margin-top: 140px;
-                padding: 0 5% 4rem 5%;
-            }
-
-            .hero {
-                padding: 3rem 0 2rem 0;
-            }
-
-            .stats-row {
-                gap: 2rem;
-            }
-
-            .controls-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-sort-group {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .search-box, .search-input, .sort-select {
-                width: 100%;
-            }
-
-            .template-grid {
-                grid-template-columns: 100%;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
     <!-- Header -->
     <header>
         <a href="#" class="brand-container">
             <span class="brand-logo">E·INV</span>
-            <span class="brand-subtitle" data-i18n="brandSubtitle">Digital Invitations</span>
+            <span class="brand-subtitle" data-i18n="brandSubtitle">
+                Digital Invitations
+            </span>
         </a>
+
         <div class="nav-right">
+
             <ul class="nav-links">
-                <li><a href="#collection" data-i18n="navWeddings" onclick="filterByCategory('wedding', event)">Weddings</a></li>
-                <li><a href="#collection" data-i18n="navBirthdays" onclick="filterByCategory('birthday', event)">Birthdays</a></li>
-                <li><a href="#collection" data-i18n="navAll" onclick="filterByCategory('all', event)" class="active">All Templates</a></li>
+                <li>
+                    <a
+                        href="#collection"
+                        data-i18n="navWeddings"
+                        onclick="filterByCategory('wedding', event)"
+                    >
+                        Weddings
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="#collection"
+                        data-i18n="navBirthdays"
+                        onclick="filterByCategory('birthday', event)"
+                    >
+                        Birthdays
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="#collection"
+                        data-i18n="navAll"
+                        onclick="filterByCategory('all', event)"
+                        class="active"
+                    >
+                        All Templates
+                    </a>
+                </li>
             </ul>
+
             <div class="lang-switcher">
-                <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
-                <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
-                <button class="lang-btn" onclick="switchLanguage('uz')">UZ</button>
+                <button
+                    class="lang-btn active"
+                    onclick="switchLanguage('en')"
+                >
+                    EN
+                </button>
+
+                <button
+                    class="lang-btn"
+                    onclick="switchLanguage('ru')"
+                >
+                    RU
+                </button>
+
+                <button
+                    class="lang-btn"
+                    onclick="switchLanguage('uz')"
+                >
+                    UZ
+                </button>
             </div>
+
         </div>
     </header>
 
+
     <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
+
+        <!-- Hero -->
         <section class="hero">
-            <span class="hero-eyebrow" data-i18n="heroEyebrow">The Invitation Collection</span>
-            <h1 class="hero-title" data-i18n="heroTitle">Moments worth remembering, beautifully invited.</h1>
-            <p class="hero-desc" data-i18n="heroDesc">A curated collection of digital invitations designed for weddings, birthdays, and life's most meaningful celebrations.</p>
-            <div class="hero-ornament">♦ &nbsp; ✧ &nbsp; ♦</div>
+
+            <span
+                class="hero-eyebrow"
+                data-i18n="heroEyebrow"
+            >
+                The Invitation Collection
+            </span>
+
+            <h1
+                class="hero-title"
+                data-i18n="heroTitle"
+            >
+                Moments worth remembering, beautifully invited.
+            </h1>
+
+            <p
+                class="hero-desc"
+                data-i18n="heroDesc"
+            >
+                A curated collection of digital invitations designed
+                for weddings, birthdays, and life's most meaningful
+                celebrations.
+            </p>
+
+            <div class="hero-ornament">
+                ♦ &nbsp; ✧ &nbsp; ♦
+            </div>
+
         </section>
 
-        <!-- Collection Statistics -->
-        <div class="stats-row" id="statsRow">
-            <!-- Dynamically populated or structured -->
-        </div>
 
-        <!-- Controls Bar -->
-        <div class="controls-bar" id="collection">
+        <!-- Statistics -->
+        <div
+            class="stats-row"
+            id="statsRow"
+        ></div>
+
+
+        <!-- Collection Controls -->
+        <div
+            class="controls-bar"
+            id="collection"
+        >
+
             <div class="category-filters">
-                <button class="filter-btn active" data-filter="all" onclick="filterByCategory('all')" data-i18n="filterAll">All</button>
-                <button class="filter-btn" data-filter="wedding" onclick="filterByCategory('wedding')" data-i18n="filterWedding">Wedding</button>
-                <button class="filter-btn" data-filter="birthday" onclick="filterByCategory('birthday')" data-i18n="filterBirthday">Birthday</button>
+
+                <button
+                    class="filter-btn active"
+                    data-filter="all"
+                    onclick="filterByCategory('all')"
+                    data-i18n="filterAll"
+                >
+                    All
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="wedding"
+                    onclick="filterByCategory('wedding')"
+                    data-i18n="filterWedding"
+                >
+                    Wedding
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="birthday"
+                    onclick="filterByCategory('birthday')"
+                    data-i18n="filterBirthday"
+                >
+                    Birthday
+                </button>
+
             </div>
+
 
             <div class="search-sort-group">
+
                 <div class="search-box">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" class="search-input" id="searchInput" placeholder="Search collection..." data-i18n-placeholder="searchPlaceholder" oninput="handleSearch()">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="searchInput"
+                        placeholder="Search collection..."
+                        data-i18n-placeholder="searchPlaceholder"
+                        oninput="handleSearch()"
+                    >
+
                 </div>
-                <select class="sort-select" id="sortSelect" onchange="handleSort()">
-                    <option value="newest" data-i18n="sortNewest">Newest</option>
-                    <option value="name" data-i18n="sortName">Name</option>
-                    <option value="tier" data-i18n="sortTier">Tier</option>
+
+
+                <select
+                    class="sort-select"
+                    id="sortSelect"
+                    onchange="handleSort()"
+                >
+                    <option
+                        value="newest"
+                        data-i18n="sortNewest"
+                    >
+                        Newest
+                    </option>
+
+                    <option
+                        value="name"
+                        data-i18n="sortName"
+                    >
+                        Name
+                    </option>
+
+                    <option
+                        value="tier"
+                        data-i18n="sortTier"
+                    >
+                        Tier
+                    </option>
                 </select>
+
             </div>
+
         </div>
 
-        <!-- Template Collection Grid -->
-        <div class="template-grid" id="templateGrid">
-            <!-- Cards injected via JavaScript -->
+
+        <!-- Template Grid -->
+        <div
+            class="template-grid"
+            id="templateGrid"
+        >
 
             <!-- Empty State -->
-            <div class="empty-state" id="emptyState">
-                <div class="empty-icon">✧ &nbsp; ✦ &nbsp; ✧</div>
-                <h3 class="empty-title" data-i18n="emptyTitle">Coming Soon</h3>
-                <p class="empty-desc" data-i18n="emptyDesc">Birthday invitations are currently being crafted for the collection. More beautiful moments are on the way.</p>
+            <div
+                class="empty-state"
+                id="emptyState"
+            >
+
+                <div class="empty-icon">
+                    ✧ &nbsp; ✦ &nbsp; ✧
+                </div>
+
+                <h3
+                    class="empty-title"
+                    data-i18n="emptyTitle"
+                >
+                    Coming Soon
+                </h3>
+
+                <p
+                    class="empty-desc"
+                    data-i18n="emptyDesc"
+                >
+                    Invitations for this category are currently being
+                    crafted for the collection. More beautiful moments
+                    are on the way.
+                </p>
+
             </div>
+
         </div>
+
     </main>
+
 
     <!-- Footer -->
     <footer>
-        <div class="footer-brand">E·INV</div>
-        <div class="footer-tagline" data-i18n="footerTagline">Digital invitations for meaningful moments.</div>
-        <div class="footer-ornament">♦</div>
-        <div class="footer-copy">&copy; 2026 E·INV. All rights reserved.</div>
+
+        <div class="footer-brand">
+            E·INV
+        </div>
+
+        <div
+            class="footer-tagline"
+            data-i18n="footerTagline"
+        >
+            Digital invitations for meaningful moments.
+        </div>
+
+        <div class="footer-ornament">
+            ♦
+        </div>
+
+        <div class="footer-copy">
+            &copy; 2026 E·INV. All rights reserved.
+        </div>
+
     </footer>
 
-    <!-- JavaScript Application Logic -->
-    <script>
-        // Multi-language Translation Dictionary
-        const translations = {
-            en: {
-                brandSubtitle: "Digital Invitations",
-                navWeddings: "Weddings",
-                navBirthdays: "Birthdays",
-                navAll: "All Templates",
-                heroEyebrow: "The Invitation Collection",
-                heroTitle: "Moments worth remembering, beautifully invited.",
-                heroDesc: "A curated collection of digital invitations designed for weddings, birthdays, and life's most meaningful celebrations.",
-                statWedding: "Wedding Templates",
-                statCelebration: "Celebration Templates",
-                statMoments: "Moments to Celebrate",
-                filterAll: "All",
-                filterWedding: "Wedding",
-                filterBirthday: "Birthday",
-                searchPlaceholder: "Search collection...",
-                sortNewest: "Newest",
-                sortName: "Name",
-                sortTier: "Tier",
-                statusAvailable: "Available",
-                statusComingSoon: "Coming Soon",
-                previewText: "Preview",
-                emptyTitle: "Coming Soon",
-                emptyDesc: "Invitations for this category are currently being crafted for the collection. More beautiful moments are on the way.",
-                footerTagline: "Digital invitations for meaningful moments.",
-                t1Title: "Wedding Basic 01",
-                t1Desc: "A refined and romantic wedding invitation with elegant typography, subtle animation, countdown, RSVP and venue details.",
-                t2Title: "Birthday Basic 01",
-                t2Desc: "A joyful yet sophisticated celebration invitation featuring clean layouts, interactive RSVP, and event timing."
-            },
-            ru: {
-                brandSubtitle: "Цифровые Приглашения",
-                navWeddings: "Свадьбы",
-                navBirthdays: "Дни Рождения",
-                navAll: "Все Шаблоны",
-                heroEyebrow: "Коллекция Приглашений",
-                heroTitle: "Моменты, которые стоит запомнить, с красивым приглашением.",
-                heroDesc: "Кураторская коллекция цифровых приглашений для свадеб, дней рождения и самых важных жизненных событий.",
-                statWedding: "Свадебные шаблоны",
-                statCelebration: "Праздничные шаблоны",
-                statMoments: "Моменты для праздника",
-                filterAll: "Все",
-                filterWedding: "Свадьба",
-                filterBirthday: "День рождения",
-                searchPlaceholder: "Поиск по коллекции...",
-                sortNewest: "Новые",
-                sortName: "По имени",
-                sortTier: "По уровню",
-                statusAvailable: "Доступно",
-                statusComingSoon: "Скоро",
-                previewText: "Просмотр",
-                emptyTitle: "Скоро в продаже",
-                emptyDesc: "Приглашения для этой категории сейчас создаются для нашей коллекции. Ещё больше прекрасных моментов впереди.",
-                footerTagline: "Цифровые приглашения для значимых моментов.",
-                t1Title: "Свадебный Базовый 01",
-                t1Desc: "Изысканное и романтичное свадебное приглашение с элегантной типографикой, анимацией, таймером, RSVP и деталями площадки.",
-                t2Title: "Праздничный Базовый 01",
-                t2Desc: "Яркое, но изысканное приглашение на праздник с чистой версткой, интерактивным RSVP и временем проведения."
-            },
-            uz: {
-                brandSubtitle: "Raqamli Taklifnomalar",
-                navWeddings: "To'ylar",
-                navBirthdays: "Tug'ilgan kunlar",
-                navAll: "Barcha Shablonlar",
-                heroEyebrow: "Taklifnomalar To'plami",
-                heroTitle: "Esga olinadigan lahzalar, go'zal taklifnoma ila.",
-                heroDesc: "To'ylar, tug'ilgan kunlar va hayotning eng mazmunli bayramlari uchun maxsus tayyorlangan raqamli taklifnomalar kolleksiyasi.",
-                statWedding: "To'y shablonlari",
-                statCelebration: "Bayram shablonlari",
-                statMoments: "Nishonlash uchun lahzalar",
-                filterAll: "Barchasi",
-                filterWedding: "To'y",
-                filterBirthday: "Tug'ilgan kun",
-                searchPlaceholder: "To'plamdan qidirish...",
-                sortNewest: "Eng yangi",
-                statSortName: "Nomi bo'yicha",
-                sortName: "Nomi bo'yicha",
-                sortTier: "Darajasi",
-                statusAvailable: "Mavjud",
-                statusComingSoon: "Tez kunda",
-                previewText: "Ko'rish",
-                emptyTitle: "Tez Kunda",
-                emptyDesc: "Ushbu toifa uchun taklifnomalar hozirda tayyorlanmoqda. Yana-da go'zal lahzalar yo'lda.",
-                footerTagline: "Mazmunli lahzalar uchun raqamli taklifnomalar.",
-                t1Title: "To'y Bazasih 01",
-                t1Desc: "Nafis matn terish, nozik animatsiya, ortga hisoblash, RSVP va manzil tafsilotlariga ega mukammal va romantik to'y taklifnomasi.",
-                t2Title: "Tug'ilgan Kun 01",
-                t2Desc: "Toza dizayn, interaktiv RSVP va tadbirkorlik vaqtlari bilan jihozlangan quvnoq hamda zamonaviy bayram taklifnomasi."
-            }
-        };
 
-        let currentLang = 'en';
+    <script src="js/app.js"></script>
 
-        // Central Template Configuration
-        const templates = [
-            {
-                id: "wedding-basic-01",
-                category: "wedding",
-                tier: "basic",
-                number: "01",
-                titleKey: "t1Title",
-                descKey: "t1Desc",
-                path: "wedding/wedding-basic-01.html",
-                status: "available",
-                dateAdded: "2026-01-01"
-            },
-            {
-                id: "birthday-basic-01",
-                category: "birthday",
-                tier: "basic",
-                number: "02",
-                titleKey: "t2Title",
-                descKey: "t2Desc",
-                path: "birthday/birthday-basic-01.html",
-                status: "coming-soon",
-                dateAdded: "2026-02-01"
-            }
-        ];
-
-        let activeCategory = 'all';
-        let searchQuery = '';
-        let currentSort = 'newest';
-
-        // Initialize Application
-        document.addEventListener('DOMContentLoaded', () => {
-            renderStats();
-            renderTemplates();
-        });
-
-        // Switch Language function
-        function switchLanguage(lang) {
-            currentLang = lang;
-            
-            // Update active state on buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
-            });
-
-            // Update document lang attribute
-            document.documentElement.setAttribute('lang', lang);
-
-            // Translate static data-i18n elements
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-
-            // Translate placeholders
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder');
-                if (translations[lang][key]) {
-                    el.placeholder = translations[lang][key];
-                }
-            });
-
-            renderStats();
-            renderTemplates();
-        }
-
-        // Render Statistics Row Dynamically
-        function renderStats() {
-            const weddingCount = templates.filter(t => t.category === 'wedding').length;
-            const celebrationCount = templates.filter(t => t.category === 'birthday').length;
-            const t = translations[currentLang];
-
-            const statsRow = document.getElementById('statsRow');
-            statsRow.innerHTML = `
-                <div class="stat-item">
-                    <div class="stat-number">0${weddingCount}</div>
-                    <div class="stat-label">${t.statWedding}</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">0${celebrationCount}</div>
-                    <div class="stat-label">${t.statCelebration}</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">∞</div>
-                    <div class="stat-label">${t.statMoments}</div>
-                </div>
-            `;
-        }
-
-        // Filter by Category
-        function filterByCategory(category, event) {
-            if (event) event.preventDefault();
-            activeCategory = category;
-            
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.getAttribute('data-filter') === category);
-            });
-
-            document.querySelectorAll('.nav-links a').forEach(a => {
-                a.classList.remove('active');
-                if(category === 'wedding' && a.getAttribute('data-i18n') === 'navWeddings') a.classList.add('active');
-                if(category === 'birthday' && a.getAttribute('data-i18n') === 'navBirthdays') a.classList.add('active');
-                if(category === 'all' && a.getAttribute('data-i18n') === 'navAll') a.classList.add('active');
-            });
-
-            renderTemplates();
-        }
-
-        // Handle Real-time Search
-        function handleSearch() {
-            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
-            renderTemplates();
-        }
-
-        // Handle Sorting
-        function handleSort() {
-            currentSort = document.getElementById('sortSelect').value;
-            renderTemplates();
-        }
-
-        // Render Template Cards & Empty States
-        function renderTemplates() {
-            const grid = document.getElementById('templateGrid');
-            const emptyState = document.getElementById('emptyState');
-            const t = translations[currentLang];
-
-            // Filter templates based on category & search query
-            let filtered = templates.filter(tmpl => {
-                const matchesCategory = activeCategory === 'all' || tmpl.category === activeCategory;
-                const titleText = translations.en[tmpl.titleKey].toLowerCase();
-                const descText = translations.en[tmpl.descKey].toLowerCase();
-                const matchesSearch = titleText.includes(searchQuery) || 
-                                      descText.includes(searchQuery) || 
-                                      tmpl.category.includes(searchQuery) || 
-                                      tmpl.tier.includes(searchQuery);
-                return matchesCategory && matchesSearch;
-            });
-
-            // Sort templates
-            filtered.sort((a, b) => {
-                if (currentSort === 'newest') {
-                    return new Date(b.dateAdded) - new Date(a.dateAdded);
-                } else if (currentSort === 'name') {
-                    return translations.en[a.titleKey].localeCompare(translations.en[b.titleKey]);
-                } else if (currentSort === 'tier') {
-                    return a.tier.localeCompare(b.tier);
-                }
-            });
-
-            // Remove existing cards before re-rendering
-            const existingCards = grid.querySelectorAll('.template-card');
-            existingCards.forEach(card => card.remove());
-
-            if (filtered.length === 0) {
-                emptyState.classList.add('visible');
-                return;
-            } else {
-                emptyState.classList.remove('visible');
-            }
-
-            // Build card elements
-            filtered.forEach(tmpl => {
-                const card = document.createElement('div');
-                card.className = 'template-card';
-
-                const title = t[tmpl.titleKey];
-                const description = t[tmpl.descKey];
-                const statusText = tmpl.status === 'available' ? t.statusAvailable : t.statusComingSoon;
-
-                card.innerHTML = `
-                    <div class="card-preview-container">
-                        <div class="card-number-badge">${tmpl.number}</div>
-                        <div class="mini-invitation">
-                            <div class="mini-inv-border"></div>
-                            <div class="mini-inv-top">${tmpl.category.toUpperCase()}</div>
-                            <div class="mini-inv-body">
-                                <div class="mini-inv-names">${tmpl.category === 'wedding' ? 'Victoria &amp; Julian' : 'Sophia Laurent'}</div>
-                                <div class="mini-inv-amp">&amp;</div>
-                                <div class="mini-inv-date">10 . 10 . 2026</div>
-                            </div>
-                            <div class="mini-inv-footer">${tmpl.tier.toUpperCase()}</div>
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-meta-row">
-                            <span class="card-category-tier">${tmpl.category} &middot; ${tmpl.tier}</span>
-                            <span class="card-status">${statusText}</span>
-                        </div>
-                        <h3 class="card-title">${title}</h3>
-                        <p class="card-desc">${description}</p>
-                        <div class="card-action-row">
-                            <span class="card-category-tier" style="opacity: 0.5;">ID: ${tmpl.id}</span>
-                            ${tmpl.status === 'available' ? `
-                                <a href="${tmpl.path}" class="preview-link">
-                                    ${t.previewText} <span>&rarr;</span>
-                                </a>
-                            ` : `
-                                <span style="font-size: 0.75rem; color: var(--color-text-muted); letter-spacing: 0.15s; text-transform: uppercase;">${t.statusComingSoon}</span>
-                            `}
-                        </div>
-                    </div>
-                `;
-
-                grid.insertBefore(card, emptyState);
-            });
-        }
-    </script>
 </body>
 </html>
