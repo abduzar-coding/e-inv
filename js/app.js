@@ -311,7 +311,7 @@ const templates = [
             "birthday/birthday-basic-01.html",
 
         status:
-            "coming-soon",
+            "available",
 
         dateAdded:
             "2026-02-01"
@@ -328,12 +328,50 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
+        initializeLanguage();
+
+        initializeNavigation();
+
+        initializeFilters();
+
+        initializeSearch();
+
+        initializeSort();
+
         renderStats();
 
         renderTemplates();
 
     }
 );
+
+
+/* ========================================
+   LANGUAGE INITIALIZATION
+======================================== */
+
+function initializeLanguage() {
+
+    const savedLanguage =
+        localStorage.getItem(
+            "einv-language"
+        );
+
+
+    if (
+        savedLanguage &&
+        translations[savedLanguage]
+    ) {
+
+        currentLang =
+            savedLanguage;
+
+    }
+
+
+    applyTranslations();
+
+}
 
 
 /* ========================================
@@ -346,7 +384,39 @@ function switchLanguage(lang) {
         return;
     }
 
-    currentLang = lang;
+
+    currentLang =
+        lang;
+
+
+    localStorage.setItem(
+        "einv-language",
+        lang
+    );
+
+
+    applyTranslations();
+
+}
+
+
+/* ========================================
+   APPLY TRANSLATIONS
+======================================== */
+
+function applyTranslations() {
+
+    const language =
+        translations[currentLang];
+
+
+    /* HTML language */
+
+    document.documentElement
+        .setAttribute(
+            "lang",
+            currentLang
+        );
 
 
     /* Active language button */
@@ -355,26 +425,41 @@ function switchLanguage(lang) {
         .querySelectorAll(".lang-btn")
         .forEach(button => {
 
-            button.classList.toggle(
-                "active",
+            const buttonLanguage =
+                button.getAttribute(
+                    "data-lang"
+                );
+
+
+            /*
+             * Fallback for existing HTML
+             * buttons that only contain
+             * EN / RU / UZ as text.
+             */
+
+            const textLanguage =
                 button.textContent
                     .trim()
-                    .toLowerCase() === lang
+                    .toLowerCase();
+
+
+            const isActive =
+                buttonLanguage
+                    ? buttonLanguage ===
+                      currentLang
+                    : textLanguage ===
+                      currentLang;
+
+
+            button.classList.toggle(
+                "active",
+                isActive
             );
 
         });
 
 
-    /* HTML language */
-
-    document.documentElement
-        .setAttribute(
-            "lang",
-            lang
-        );
-
-
-    /* Translate static elements */
+    /* Translate text */
 
     document
         .querySelectorAll("[data-i18n]")
@@ -385,12 +470,17 @@ function switchLanguage(lang) {
                     "data-i18n"
                 );
 
+
             if (
-                translations[lang][key]
+                Object.prototype.hasOwnProperty
+                    .call(
+                        language,
+                        key
+                    )
             ) {
 
                 element.textContent =
-                    translations[lang][key];
+                    language[key];
 
             }
 
@@ -410,21 +500,458 @@ function switchLanguage(lang) {
                     "data-i18n-placeholder"
                 );
 
+
             if (
-                translations[lang][key]
+                Object.prototype.hasOwnProperty
+                    .call(
+                        language,
+                        key
+                    )
             ) {
 
                 element.placeholder =
-                    translations[lang][key];
+                    language[key];
 
             }
 
         });
 
 
+    /*
+     * Update navigation/filter
+     * active states after language
+     * changes.
+     */
+
+    updateNavigationState();
+
+    updateFilterState();
+
     renderStats();
 
     renderTemplates();
+
+}
+
+
+/* ========================================
+   NAVIGATION
+======================================== */
+
+function initializeNavigation() {
+
+    document
+        .querySelectorAll(".nav-links a")
+        .forEach(link => {
+
+            link.addEventListener(
+                "click",
+                event => {
+
+                    const key =
+                        link.getAttribute(
+                            "data-i18n"
+                        );
+
+
+                    if (
+                        key ===
+                        "navWeddings"
+                    ) {
+
+                        filterByCategory(
+                            "wedding",
+                            event
+                        );
+
+                    }
+
+
+                    else if (
+                        key ===
+                        "navBirthdays"
+                    ) {
+
+                        filterByCategory(
+                            "birthday",
+                            event
+                        );
+
+                    }
+
+
+                    else if (
+                        key ===
+                        "navAll"
+                    ) {
+
+                        filterByCategory(
+                            "all",
+                            event
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+}
+
+
+/* ========================================
+   NAVIGATION STATE
+======================================== */
+
+function updateNavigationState() {
+
+    document
+        .querySelectorAll(".nav-links a")
+        .forEach(link => {
+
+            link.classList.remove(
+                "active"
+            );
+
+
+            const key =
+                link.getAttribute(
+                    "data-i18n"
+                );
+
+
+            if (
+                activeCategory ===
+                    "wedding" &&
+                key ===
+                    "navWeddings"
+            ) {
+
+                link.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            if (
+                activeCategory ===
+                    "birthday" &&
+                key ===
+                    "navBirthdays"
+            ) {
+
+                link.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            if (
+                activeCategory ===
+                    "all" &&
+                key ===
+                    "navAll"
+            ) {
+
+                link.classList.add(
+                    "active"
+                );
+
+            }
+
+        });
+
+}
+
+
+/* ========================================
+   CATEGORY FILTER INITIALIZATION
+======================================== */
+
+function initializeFilters() {
+
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                event => {
+
+                    const category =
+                        button.getAttribute(
+                            "data-filter"
+                        );
+
+
+                    filterByCategory(
+                        category,
+                        event
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* ========================================
+   CATEGORY FILTER
+======================================== */
+
+function filterByCategory(
+    category,
+    event
+) {
+
+    if (event) {
+        event.preventDefault();
+    }
+
+
+    if (
+        ![
+            "all",
+            "wedding",
+            "birthday"
+        ].includes(category)
+    ) {
+
+        category = "all";
+
+    }
+
+
+    activeCategory =
+        category;
+
+
+    updateFilterState();
+
+    updateNavigationState();
+
+    renderTemplates();
+
+}
+
+
+/* ========================================
+   FILTER STATE
+======================================== */
+
+function updateFilterState() {
+
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.getAttribute(
+                    "data-filter"
+                ) === activeCategory
+            );
+
+        });
+
+}
+
+
+/* ========================================
+   SEARCH INITIALIZATION
+======================================== */
+
+function initializeSearch() {
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    input.addEventListener(
+        "input",
+        handleSearch
+    );
+
+}
+
+
+/* ========================================
+   SEARCH
+======================================== */
+
+function handleSearch() {
+
+    const input =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    searchQuery =
+        input.value
+            .toLowerCase()
+            .trim();
+
+
+    renderTemplates();
+
+}
+
+
+/* ========================================
+   SORT INITIALIZATION
+======================================== */
+
+function initializeSort() {
+
+    const select =
+        document.getElementById(
+            "sortSelect"
+        );
+
+
+    if (!select) {
+        return;
+    }
+
+
+    select.addEventListener(
+        "change",
+        handleSort
+    );
+
+}
+
+
+/* ========================================
+   SORT
+======================================== */
+
+function handleSort() {
+
+    const select =
+        document.getElementById(
+            "sortSelect"
+        );
+
+
+    if (!select) {
+        return;
+    }
+
+
+    currentSort =
+        select.value;
+
+
+    renderTemplates();
+
+}
+
+
+/* ========================================
+   TEMPLATE SEARCH
+======================================== */
+
+function templateMatchesSearch(
+    template
+) {
+
+    if (!searchQuery) {
+        return true;
+    }
+
+
+    const language =
+        translations[currentLang];
+
+
+    const title =
+        (
+            language[
+                template.titleKey
+            ] || ""
+        )
+            .toLowerCase();
+
+
+    const description =
+        (
+            language[
+                template.descKey
+            ] || ""
+        )
+            .toLowerCase();
+
+
+    const englishTitle =
+        (
+            translations.en[
+                template.titleKey
+            ] || ""
+        )
+            .toLowerCase();
+
+
+    const englishDescription =
+        (
+            translations.en[
+                template.descKey
+            ] || ""
+        )
+            .toLowerCase();
+
+
+    const category =
+        template.category
+            .toLowerCase();
+
+
+    const tier =
+        template.tier
+            .toLowerCase();
+
+
+    const id =
+        template.id
+            .toLowerCase();
+
+
+    return (
+
+        title.includes(searchQuery) ||
+
+        description.includes(searchQuery) ||
+
+        englishTitle.includes(searchQuery) ||
+
+        englishDescription.includes(searchQuery) ||
+
+        category.includes(searchQuery) ||
+
+        tier.includes(searchQuery) ||
+
+        id.includes(searchQuery)
+
+    );
+
 }
 
 
@@ -434,17 +961,30 @@ function switchLanguage(lang) {
 
 function renderStats() {
 
+    const statsRow =
+        document.getElementById(
+            "statsRow"
+        );
+
+
+    if (!statsRow) {
+        return;
+    }
+
+
     const weddingCount =
         templates.filter(
             template =>
-                template.category === "wedding"
+                template.category ===
+                "wedding"
         ).length;
 
 
     const celebrationCount =
         templates.filter(
             template =>
-                template.category === "birthday"
+                template.category ===
+                "birthday"
         ).length;
 
 
@@ -452,18 +992,14 @@ function renderStats() {
         translations[currentLang];
 
 
-    const statsRow =
-        document.getElementById(
-            "statsRow"
-        );
-
-
     statsRow.innerHTML = `
 
         <div class="stat-item">
 
             <div class="stat-number">
-                ${String(weddingCount).padStart(2, "0")}
+                ${String(
+                    weddingCount
+                ).padStart(2, "0")}
             </div>
 
             <div class="stat-label">
@@ -476,7 +1012,9 @@ function renderStats() {
         <div class="stat-item">
 
             <div class="stat-number">
-                ${String(celebrationCount).padStart(2, "0")}
+                ${String(
+                    celebrationCount
+                ).padStart(2, "0")}
             </div>
 
             <div class="stat-label">
@@ -499,204 +1037,175 @@ function renderStats() {
         </div>
 
     `;
+
 }
 
 
 /* ========================================
-   CATEGORY FILTER
+   TEMPLATE PREVIEW
 ======================================== */
 
-function filterByCategory(
-    category,
-    event
-) {
-
-    if (event) {
-        event.preventDefault();
-    }
-
-
-    activeCategory =
-        category;
-
-
-    /* Filter buttons */
-
-    document
-        .querySelectorAll(".filter-btn")
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.getAttribute(
-                    "data-filter"
-                ) === category
-            );
-
-        });
-
-
-    /* Navigation */
-
-    document
-        .querySelectorAll(".nav-links a")
-        .forEach(link => {
-
-            link.classList.remove(
-                "active"
-            );
-
-
-            const key =
-                link.getAttribute(
-                    "data-i18n"
-                );
-
-
-            if (
-                category === "wedding" &&
-                key === "navWeddings"
-            ) {
-
-                link.classList.add(
-                    "active"
-                );
-
-            }
-
-
-            if (
-                category === "birthday" &&
-                key === "navBirthdays"
-            ) {
-
-                link.classList.add(
-                    "active"
-                );
-
-            }
-
-
-            if (
-                category === "all" &&
-                key === "navAll"
-            ) {
-
-                link.classList.add(
-                    "active"
-                );
-
-            }
-
-        });
-
-
-    renderTemplates();
-}
-
-
-/* ========================================
-   SEARCH
-======================================== */
-
-function handleSearch() {
-
-    const input =
-        document.getElementById(
-            "searchInput"
-        );
-
-
-    searchQuery =
-        input.value
-            .toLowerCase()
-            .trim();
-
-
-    renderTemplates();
-}
-
-
-/* ========================================
-   SORT
-======================================== */
-
-function handleSort() {
-
-    currentSort =
-        document.getElementById(
-            "sortSelect"
-        ).value;
-
-
-    renderTemplates();
-}
-
-
-/* ========================================
-   TEMPLATE SEARCH
-======================================== */
-
-function templateMatchesSearch(
+function createMiniPreview(
     template
 ) {
 
-    if (!searchQuery) {
-        return true;
-    }
+    const miniName =
+        template.category ===
+        "wedding"
+
+            ? "Victoria &amp; Julian"
+
+            : "Sophia Laurent";
 
 
-    const language =
-        translations[currentLang];
+    const categoryLabel =
+        template.category ===
+        "wedding"
+
+            ? "WEDDING"
+
+            : "BIRTHDAY";
 
 
-    const title =
-        language[
-            template.titleKey
-        ]?.toLowerCase() || "";
+    const dateLabel =
+        template.category ===
+        "wedding"
+
+            ? "10 . 10 . 2026"
+
+            : "15 . 11 . 2026";
 
 
-    const description =
-        language[
-            template.descKey
-        ]?.toLowerCase() || "";
+    return `
+
+        <div class="mini-invitation">
+
+            <div
+                class="mini-inv-border"
+            ></div>
 
 
-    const englishTitle =
-        translations.en[
-            template.titleKey
-        ]?.toLowerCase() || "";
+            <div class="mini-inv-top">
+                ${categoryLabel}
+            </div>
 
 
-    const englishDescription =
-        translations.en[
-            template.descKey
-        ]?.toLowerCase() || "";
+            <div class="mini-inv-body">
+
+                <div class="mini-inv-names">
+                    ${miniName}
+                </div>
 
 
-    return (
+                <div class="mini-inv-amp">
+                    &amp;
+                </div>
 
-        title.includes(searchQuery) ||
 
-        description.includes(searchQuery) ||
+                <div class="mini-inv-date">
+                    ${dateLabel}
+                </div>
 
-        englishTitle.includes(searchQuery) ||
+            </div>
 
-        englishDescription.includes(searchQuery) ||
 
-        template.category
-            .toLowerCase()
-            .includes(searchQuery) ||
+            <div class="mini-inv-footer">
+                ${template.tier.toUpperCase()}
+            </div>
 
-        template.tier
-            .toLowerCase()
-            .includes(searchQuery) ||
+        </div>
 
-        template.id
-            .toLowerCase()
-            .includes(searchQuery)
+    `;
 
+}
+
+
+/* ========================================
+   TEMPLATE SORTING
+======================================== */
+
+function sortTemplates(
+    templateList
+) {
+
+    return templateList.sort(
+        (a, b) => {
+
+            if (
+                currentSort ===
+                "newest"
+            ) {
+
+                return (
+                    new Date(
+                        b.dateAdded
+                    ) -
+                    new Date(
+                        a.dateAdded
+                    )
+                );
+
+            }
+
+
+            if (
+                currentSort ===
+                "name"
+            ) {
+
+                const nameA =
+                    translations.en[
+                        a.titleKey
+                    ] || "";
+
+
+                const nameB =
+                    translations.en[
+                        b.titleKey
+                    ] || "";
+
+
+                return nameA.localeCompare(
+                    nameB
+                );
+
+            }
+
+
+            if (
+                currentSort ===
+                "tier"
+            ) {
+
+                const tierOrder = {
+                    basic: 1,
+                    animated: 2,
+                    premium: 3,
+                    luxury: 4
+                };
+
+
+                return (
+                    (
+                        tierOrder[
+                            a.tier
+                        ] || 99
+                    ) -
+                    (
+                        tierOrder[
+                            b.tier
+                        ] || 99
+                    )
+                );
+
+            }
+
+
+            return 0;
+
+        }
     );
+
 }
 
 
@@ -718,18 +1227,26 @@ function renderTemplates() {
         );
 
 
+    if (!grid || !emptyState) {
+        return;
+    }
+
+
     const t =
         translations[currentLang];
 
 
-    /* Filter */
+    /* ====================================
+       FILTER
+    ==================================== */
 
     let filtered =
         templates.filter(
             template => {
 
                 const matchesCategory =
-                    activeCategory === "all" ||
+                    activeCategory ===
+                        "all" ||
                     template.category ===
                         activeCategory;
 
@@ -749,73 +1266,43 @@ function renderTemplates() {
         );
 
 
-    /* Sort */
+    /* ====================================
+       SORT
+    ==================================== */
 
-    filtered.sort(
-        (a, b) => {
-
-            if (
-                currentSort === "newest"
-            ) {
-
-                return (
-                    new Date(b.dateAdded) -
-                    new Date(a.dateAdded)
-                );
-
-            }
+    filtered =
+        sortTemplates(
+            filtered
+        );
 
 
-            if (
-                currentSort === "name"
-            ) {
-
-                return translations.en[
-                    a.titleKey
-                ].localeCompare(
-                    translations.en[
-                        b.titleKey
-                    ]
-                );
-
-            }
-
-
-            if (
-                currentSort === "tier"
-            ) {
-
-                return a.tier.localeCompare(
-                    b.tier
-                );
-
-            }
-
-
-            return 0;
-
-        }
-    );
-
-
-    /* Remove old cards */
+    /* ====================================
+       REMOVE OLD CARDS
+    ==================================== */
 
     grid
         .querySelectorAll(
             ".template-card"
         )
-        .forEach(card =>
-            card.remove()
+        .forEach(
+            card =>
+                card.remove()
         );
 
 
-    /* Empty state */
+    /* ====================================
+       EMPTY STATE
+    ==================================== */
 
-    if (filtered.length === 0) {
+    if (
+        filtered.length ===
+        0
+    ) {
 
         emptyState.classList.add(
             "visible"
         );
+
 
         return;
 
@@ -827,14 +1314,16 @@ function renderTemplates() {
     );
 
 
-    /* Build cards */
+    /* ====================================
+       BUILD CARDS
+    ==================================== */
 
     filtered.forEach(
         template => {
 
             const card =
                 document.createElement(
-                    "div"
+                    "article"
                 );
 
 
@@ -845,13 +1334,15 @@ function renderTemplates() {
             const title =
                 t[
                     template.titleKey
-                ];
+                ] ||
+                template.id;
 
 
             const description =
                 t[
                     template.descKey
-                ];
+                ] ||
+                "";
 
 
             const statusText =
@@ -863,15 +1354,6 @@ function renderTemplates() {
                     : t.statusComingSoon;
 
 
-            const miniName =
-                template.category ===
-                "wedding"
-
-                    ? "Victoria &amp; Julian"
-
-                    : "Sophia Laurent";
-
-
             const preview =
                 template.status ===
                 "available"
@@ -881,6 +1363,7 @@ function renderTemplates() {
                         <a
                             href="${template.path}"
                             class="preview-link"
+                            aria-label="${t.previewText}: ${title}"
                         >
                             ${t.previewText}
 
@@ -915,56 +1398,9 @@ function renderTemplates() {
                     </div>
 
 
-                    <div
-                        class="mini-invitation"
-                    >
-
-                        <div
-                            class="mini-inv-border"
-                        ></div>
-
-
-                        <div
-                            class="mini-inv-top"
-                        >
-                            ${template.category.toUpperCase()}
-                        </div>
-
-
-                        <div
-                            class="mini-inv-body"
-                        >
-
-                            <div
-                                class="mini-inv-names"
-                            >
-                                ${miniName}
-                            </div>
-
-
-                            <div
-                                class="mini-inv-amp"
-                            >
-                                &amp;
-                            </div>
-
-
-                            <div
-                                class="mini-inv-date"
-                            >
-                                10 . 10 . 2026
-                            </div>
-
-                        </div>
-
-
-                        <div
-                            class="mini-inv-footer"
-                        >
-                            ${template.tier.toUpperCase()}
-                        </div>
-
-                    </div>
+                    ${createMiniPreview(
+                        template
+                    )}
 
                 </div>
 
